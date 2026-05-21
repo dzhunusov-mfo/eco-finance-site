@@ -1,0 +1,339 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Облигации ЭКО-Финанс — 22% годовых</title>
+<meta name="description" content="Инвестируйте в облигации МФО ЭКО-Финанс. Ставка 22% годовых, ежеквартальные выплаты, 0 дефолтов за всё время. Купить через Jusan на KASE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --g:#1a5c3a;--gm:#2d7d52;--gl:#e8f5ee;--ga:#3fa86e;
+  --gold:#c8a84b;--goldl:#f5f0e4;
+  --dark:#0f1f16;--text:#1a2820;--mut:#5a7060;
+  --brd:#d4e4da;--bg:#f7faf8;--r:10px;--rL:16px;
+}
+body{font-family:'Geologica',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px}
+a{color:inherit}img{max-width:100%;display:block}
+
+/* ANNOUNCE */
+.ann{background:var(--dark);color:rgba(255,255,255,.75);text-align:center;font-size:12px;padding:8px 20px}
+.ann a{color:var(--ga);text-decoration:none;margin-left:8px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(247,250,248,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--brd);padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between}
+.nl{display:flex;align-items:center;gap:10px;text-decoration:none}
+.ni{width:36px;height:36px;background:var(--g);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700}
+.nt{font-size:16px;font-weight:600;color:var(--g);letter-spacing:-.3px}
+.ns{font-size:11px;color:var(--mut)}
+.nm{display:flex;align-items:center;gap:4px}
+.nm a{text-decoration:none;color:var(--mut);font-size:14px;padding:8px 14px;border-radius:8px;transition:all .2s}
+.nm a:hover,.nm a.on{background:var(--gl);color:var(--g)}
+.nm a.cta{background:var(--g)!important;color:#fff!important;font-weight:500!important}
+.nm a.cta:hover{background:var(--gm)!important}
+.burger{display:none;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text)}
+
+/* BTNS */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'Geologica',sans-serif;font-size:15px;font-weight:500;padding:13px 26px;border-radius:var(--r);border:none;cursor:pointer;text-decoration:none;transition:all .2s}
+.bp{background:var(--g);color:#fff}.bp:hover{background:var(--gm);transform:translateY(-1px)}
+.bs{background:transparent;color:var(--g);border:1.5px solid var(--brd)}.bs:hover{border-color:var(--g);background:var(--gl)}
+.bw{background:#fff;color:var(--g)}.bw:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.bg2{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}.bg2:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+/* LAYOUT */
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+.sec{padding:80px 40px;max-width:1200px;margin:0 auto}
+.div{height:1px;background:var(--brd);max-width:1200px;margin:0 auto}
+
+/* SECTION HEADER */
+.slabel{display:inline-block;background:var(--gl);color:var(--g);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:14px}
+.stitle{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,36px);font-weight:600;color:var(--dark);letter-spacing:-.5px;line-height:1.2;margin-bottom:10px}
+.ssub{font-size:16px;color:var(--mut);max-width:500px}
+
+/* PAGE HERO */
+.phero{background:var(--g);padding:64px 40px;color:#fff}
+.phero-inner{max-width:1200px;margin:0 auto}
+.phero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,48px);font-weight:600;line-height:1.2;margin-bottom:14px}
+.phero p{font-size:17px;opacity:.8;max-width:540px}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--brd);border-radius:var(--rL);padding:24px;transition:all .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(26,92,58,.1);border-color:var(--ga)}
+.cicon{width:48px;height:48px;background:var(--gl);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.ctitle{font-size:17px;font-weight:600;color:var(--dark);margin-bottom:8px}
+.cdesc{font-size:14px;color:var(--mut);line-height:1.6}
+.ctag{display:inline-block;background:var(--gl);color:var(--g);font-size:12px;font-weight:500;padding:4px 10px;border-radius:100px;margin-top:14px}
+
+/* FEATURE */
+.fi{display:flex;gap:16px;align-items:flex-start;padding:16px;border-radius:var(--r);transition:background .2s}
+.fi:hover{background:var(--gl)}
+.fck{width:32px;height:32px;flex-shrink:0;background:var(--g);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700}
+.ftitle{font-size:15px;font-weight:600;margin-bottom:4px}
+.fdesc{font-size:13px;color:var(--mut)}
+
+/* INFO PANEL */
+.ipanel{background:var(--g);border-radius:var(--rL);padding:36px;color:#fff;position:relative;overflow:hidden}
+.ipanel::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%}
+.ipanel h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:22px;line-height:1.3;position:relative}
+.ips{margin-bottom:14px;position:relative}
+.ipsn{font-size:30px;font-weight:700;letter-spacing:-1px}
+.ipsl{font-size:13px;opacity:.7}
+.ipdiv{height:1px;background:rgba(255,255,255,.15);margin:16px 0}
+.ipnote{font-size:12px;opacity:.6;line-height:1.6;position:relative}
+
+/* BOND CARDS */
+.bcard{background:#fff;border:1px solid var(--brd);border-radius:var(--rL);padding:24px;position:relative}
+.bcard.feat{border-color:var(--g);box-shadow:0 0 0 3px rgba(63,168,110,.15)}
+.bbadge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:100px;white-space:nowrap}
+.blabel{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin-bottom:4px}
+.bname{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:10px}
+.brate{font-family:'Playfair Display',serif;font-size:38px;color:var(--g);font-weight:600;letter-spacing:-1px;margin-bottom:4px}
+.brate span{font-size:17px}
+.bperiod{font-size:13px;color:var(--mut);margin-bottom:18px}
+.bdet{font-size:13px;color:var(--mut);padding:7px 0;border-bottom:1px solid var(--gl);display:flex;justify-content:space-between}
+.bdet strong{color:var(--dark)}
+.bst{display:inline-block;margin-top:14px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px}
+.sa{background:var(--gl);color:var(--g)}.sp{background:var(--goldl);color:#8a6b1a}.sd{background:#f0f0f0;color:#888}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--g);color:#fff;padding:12px 16px;text-align:left;font-weight:500;font-size:13px}
+.tbl td{padding:10px 16px;border-bottom:1px solid var(--gl)}
+.tbl tr:hover td{background:var(--gl)}
+.tbl tr.past td{color:var(--mut)}
+
+/* STEPS */
+.step{display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--brd)}
+.step:last-child{border-bottom:none}
+.snum{width:40px;height:40px;flex-shrink:0;background:var(--g);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:700}
+.steptitle{font-size:15px;font-weight:600;margin-bottom:4px}
+.stepdesc{font-size:13px;color:var(--mut)}
+
+/* FAQ */
+.faq{border-bottom:1px solid var(--brd)}
+.faqq{width:100%;text-align:left;background:none;border:none;padding:18px 0;font-family:'Geologica',sans-serif;font-size:15px;font-weight:500;color:var(--dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faqq::after{content:'+';font-size:20px;color:var(--g);transition:transform .2s}
+.faq.open .faqq::after{transform:rotate(45deg)}
+.faqa{display:none;padding:0 0 16px;font-size:14px;color:var(--mut);line-height:1.7}
+.faq.open .faqa{display:block}
+
+/* CTA BANNER */
+.ctab{background:var(--g);border-radius:20px;padding:56px 60px;text-align:center;margin:0 40px 80px;max-width:1120px;margin-left:auto;margin-right:auto;position:relative;overflow:hidden}
+.ctab::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:rgba(255,255,255,.05);border-radius:50%}
+.ctab h2{font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,36px);color:#fff;margin-bottom:12px;position:relative}
+.ctab p{color:rgba(255,255,255,.75);font-size:16px;margin-bottom:30px;position:relative}
+.ctaa{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative}
+
+/* FOOTER */
+footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px}
+.fi2{max-width:1200px;margin:0 auto}
+.ftop{display:grid;grid-template-columns:250px 1fr 1fr 1fr;gap:40px;margin-bottom:36px}
+.fbrand h3{color:#fff;font-size:16px;font-weight:600;margin-bottom:8px}
+.fbrand p{font-size:13px;line-height:1.6}
+.fmeta{margin-top:14px;font-size:12px;line-height:1.8}
+.fcol h4{color:#fff;font-size:12px;font-weight:600;margin-bottom:14px;letter-spacing:.5px;text-transform:uppercase}
+.fcol a{display:block;color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;margin-bottom:8px;transition:color .2s}
+.fcol a:hover{color:var(--ga)}
+.faddr{margin-top:10px;font-size:12px;color:rgba(255,255,255,.35);line-height:1.8}
+.fbot{border-top:1px solid rgba(255,255,255,.1);padding-top:18px;display:flex;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:10px}
+.fbot a{color:rgba(255,255,255,.35);text-decoration:none;margin-left:20px}
+.fbot a:hover{color:var(--ga)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nm{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--brd);padding:12px 20px;gap:4px;z-index:200}
+  .nm.open{display:flex}
+  .nm a{width:100%;text-align:left}
+  .burger{display:block}
+  .sec{padding:50px 20px}
+  .ctab{margin:0 20px 60px;padding:36px 24px}
+  footer{padding:40px 20px 24px}
+  .ftop{grid-template-columns:1fr;gap:28px}
+  .fbot{flex-direction:column;gap:6px}
+  .fbot a{margin-left:0}
+  .phero{padding:44px 20px}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+</style>
+<style>
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.tip{background:var(--goldl);border:1px solid #e8d8a0;border-radius:var(--r);padding:18px 22px;margin-top:22px;display:flex;align-items:flex-start;gap:14px}
+.tip-icon{font-size:24px;flex-shrink:0}
+.tip-title{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px}
+.tip-desc{font-size:13px;color:var(--mut);line-height:1.6}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:30px}
+.how-step{text-align:center;padding:20px 16px}
+.how-num{width:44px;height:44px;background:var(--g);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700;margin:0 auto 12px}
+.how-title{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:6px}
+.how-desc{font-size:13px;color:var(--mut);line-height:1.5}
+.stbl-wrap{overflow-x:auto;margin-top:20px}
+@media(max-width:768px){.bgrid{grid-template-columns:1fr}.how-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head><body>
+
+<div class="ann">🎯 3-й выпуск облигаций — идёт размещение. Доступно ещё ~97 млн ₸ <a href="#bonds">Подробнее →</a></div>
+<nav>
+  <a class="nl" href="index.html"><div class="ni">Э</div><div><div class="nt">ЭКО-Финанс</div><div class="ns">МФО · с 2017 года</div></div></a>
+  <button class="burger" onclick="this.nextElementSibling.classList.toggle('open')">☰</button>
+  <div class="nm"><a href="index.html">Главная</a><a href="ip.html">Для ИП</a><a href="ul.html">Для юр. лиц</a><a href="obligatsii.html" class="on">Облигации</a><a href="dokumenty.html">Документы</a><a href="kontakty.html">Контакты</a><a href="kontakty.html" class="cta">Консультация</a></div>
+</nav>
+
+<div class="phero"><div class="phero-inner">
+  <h1>Облигации ЭКО-Финанс</h1>
+  <p>Инвестируйте в залоговое кредитование и получайте стабильный доход 22% годовых с ежеквартальными выплатами.</p>
+</div></div>
+
+<section class="sec">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+    <div>
+      <span class="slabel">Почему облигации</span>
+      <h2 class="stitle">Надёжные инвестиции с фиксированным доходом</h2>
+      <div style="margin-top:24px">
+        <div class="fi"><div class="fck">📈</div><div><div class="ftitle">22% годовых — фиксированно</div><div class="fdesc">Доход не зависит от рыночных колебаний. Ставка зафиксирована на весь срок облигации.</div></div></div>
+        <div class="fi"><div class="fck">📅</div><div><div class="ftitle">Ежеквартальные выплаты</div><div class="fdesc">Купонный доход поступает на ваш счёт каждые 3 месяца по установленному графику.</div></div></div>
+        <div class="fi"><div class="fck">🏦</div><div><div class="ftitle">Торгуются на KASE</div><div class="fdesc">Ценные бумаги зарегистрированы на Казахстанской фондовой бирже. Можно купить через любого брокера.</div></div></div>
+        <div class="fi"><div class="fck">🏠</div><div><div class="ftitle">Обеспечены залогами</div><div class="fdesc">Деньги инвесторов используются для кредитования под залог недвижимости в Алматы.</div></div></div>
+        <div class="fi"><div class="fck">✓</div><div><div class="ftitle">0 дефолтов за всё время</div><div class="fdesc">Ни одного пропущенного купонного платежа с 2017 года по всем выпускам облигаций.</div></div></div>
+      </div>
+    </div>
+    <div class="ipanel">
+      <h3>Ключевые показатели</h3>
+      <div class="ips"><div class="ipsn">22%</div><div class="ipsl">годовых — ставка действующих выпусков</div></div>
+      <div class="ipdiv"></div>
+      <div class="ips"><div class="ipsn">600+ млн ₸</div><div class="ipsl">привлечено от инвесторов</div></div>
+      <div class="ipdiv"></div>
+      <div class="ips"><div class="ipsn">0</div><div class="ipsl">дефолтов по купонным выплатам</div></div>
+      <div class="ipdiv"></div>
+      <div class="ips"><div class="ipsn">с 2017</div><div class="ipsl">года на рынке облигаций</div></div>
+      <div class="ipdiv"></div>
+      <div class="ipnote">Тикер на KASE: MFEC<br>Лицензия АРРФР № 02.21.0006M</div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<section class="sec" id="bonds">
+  <span class="slabel">Выпуски</span>
+  <h2 class="stitle">Облигации ЭКО-Финанс</h2>
+  <p class="ssub">Актуальная информация по всем выпускам</p>
+  <div class="bgrid">
+    <div class="bcard">
+      <div class="blabel">1-й выпуск · 200 млн ₸</div>
+      <div class="bname">MFECb0</div>
+      <div class="brate">24<span>%</span></div>
+      <div class="bperiod">годовых</div>
+      <div class="bdet"><span>Объём выпуска</span><strong>200 000 000 ₸</strong></div>
+      <div class="bdet"><span>Инвесторы</span><strong>выплачено полностью</strong></div>
+      <span class="bst sd">Погашен полностью</span>
+    </div>
+    <div class="bcard feat">
+      <div class="bbadge">Действующий</div>
+      <div class="blabel">2-й выпуск · 400 млн ₸</div>
+      <div class="bname">MFECb1</div>
+      <div class="brate">22<span>%</span></div>
+      <div class="bperiod">годовых · выплаты каждый квартал</div>
+      <div class="bdet"><span>Объём</span><strong>400 000 000 ₸</strong></div>
+      <div class="bdet"><span>Купон / квартал</span><strong>22 000 000 ₸</strong></div>
+      <div class="bdet"><span>Погашение тела</span><strong>август 2026</strong></div>
+      <div class="bdet"><span>ISIN</span><strong>—</strong></div>
+      <span class="bst sa">Выплаты идут в срок</span>
+    </div>
+    <div class="bcard">
+      <div class="bbadge" style="background:var(--gold)">Идёт размещение</div>
+      <div class="blabel">3-й выпуск · до 220 млн ₸</div>
+      <div class="bname">MFECb2</div>
+      <div class="brate">22<span>%</span></div>
+      <div class="bperiod">годовых · выплаты каждый квартал</div>
+      <div class="bdet"><span>Размещено</span><strong>123 000 000 ₸</strong></div>
+      <div class="bdet"><span>Доступно</span><strong>~97 000 000 ₸</strong></div>
+      <div class="bdet"><span>ISIN</span><strong>KZ2P00011380</strong></div>
+      <div class="bdet"><span>Дата регистрации</span><strong>20.05.2024</strong></div>
+      <span class="bst sp">Открыто для покупки</span>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<section class="sec" id="schedule">
+  <span class="slabel">Графики</span>
+  <h2 class="stitle">Графики купонных выплат</h2>
+  <p class="ssub" style="margin-bottom:30px">2-й выпуск MFECb1 (400 млн ₸, ставка 22%)</p>
+  <div class="stbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Дата фиксации реестра</th><th>Дата начала выплаты</th><th>Дата окончания выплаты</th><th>Статус</th></tr></thead>
+      <tbody>
+        <tr class="past"><td>28.04.2024</td><td>29.04.2024</td><td>13.05.2024</td><td>✅ Выплачено</td></tr>
+        <tr class="past"><td>28.07.2024</td><td>29.07.2024</td><td>12.08.2024</td><td>✅ Выплачено</td></tr>
+        <tr class="past"><td>28.10.2024</td><td>29.10.2024</td><td>12.11.2024</td><td>✅ Выплачено</td></tr>
+        <tr class="past"><td>28.01.2025</td><td>29.01.2025</td><td>12.02.2025</td><td>✅ Выплачено</td></tr>
+        <tr class="past"><td>28.04.2025</td><td>29.04.2025</td><td>13.05.2025</td><td>✅ Выплачено</td></tr>
+        <tr class="past"><td>28.07.2025</td><td>29.07.2025</td><td>12.08.2025</td><td>✅ Выплачено</td></tr>
+        <tr class="past"><td>28.10.2025</td><td>29.10.2025</td><td>12.11.2025</td><td>✅ Выплачено</td></tr>
+        <tr class="past"><td>28.01.2026</td><td>29.01.2026</td><td>12.02.2026</td><td>✅ Выплачено</td></tr>
+        <tr class="past"><td>28.04.2026</td><td>29.04.2026</td><td>10.05.2026</td><td>✅ Выплачено</td></tr>
+        <tr style="font-weight:600"><td>28.07.2026</td><td>29.07.2026</td><td>09.08.2026</td><td>⏳ Предстоит</td></tr>
+        <tr style="background:var(--gl);font-weight:600"><td colspan="3"><strong>Погашение тела облигации (400 000 000 ₸)</strong></td><td>август 2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<section class="sec" id="how">
+  <span class="slabel">Инструкция</span>
+  <h2 class="stitle">Как купить облигации через Jusan</h2>
+  <div class="how-grid">
+    <div class="how-step"><div class="how-num">1</div><div class="how-title">Скачайте приложение Jusan</div><div class="how-desc">Доступно в App Store и Google Play. Пройдите регистрацию.</div></div>
+    <div class="how-step"><div class="how-num">2</div><div><div class="how-title">Откройте брокерский счёт</div><div class="how-desc">Раздел «Инвестиции» → открыть брокерский счёт. Это бесплатно.</div></div></div>
+    <div class="how-step"><div class="how-num">3</div><div><div class="how-title">Пополните счёт</div><div class="how-desc">Переведите средства на брокерский счёт любым удобным способом.</div></div></div>
+    <div class="how-step"><div class="how-num">4</div><div><div class="how-title">Найдите и купите</div><div class="how-desc">В поиске введите «МФО ЭКО-Финанс» или тикер MFEC → выберите выпуск → нажмите «Купить».</div></div></div>
+  </div>
+  <div class="tip">
+    <div class="tip-icon">💬</div>
+    <div>
+      <div class="tip-title">Нужна помощь с покупкой?</div>
+      <div class="tip-desc">Наш менеджер поможет открыть брокерский счёт и провести первую сделку. Напишите в WhatsApp или Telegram — ответим в течение часа.</div>
+    </div>
+    <a href="kontakty.html" class="btn bp" style="flex-shrink:0;font-size:13px;padding:10px 20px;align-self:center">Получить консультацию</a>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<section class="sec" id="faq">
+  <span class="slabel">FAQ</span>
+  <h2 class="stitle">Частые вопросы инвесторов</h2>
+  <div style="margin-top:24px">
+    <div class="faq"><button class="faqq">Какую сумму можно инвестировать?</button><div class="faqa">Минимальная сумма равна номиналу одной облигации (обычно 1 000 ₸). Максимальная сумма не ограничена — вы можете купить любое количество облигаций в пределах доступного объёма выпуска.</div></div>
+    <div class="faq"><button class="faqq">Как часто я буду получать выплаты?</button><div class="faqa">Купонный доход выплачивается ежеквартально (раз в 3 месяца) по графику, установленному при регистрации выпуска. Деньги поступают прямо на ваш брокерский счёт.</div></div>
+    <div class="faq"><button class="faqq">Облагается ли доход налогом?</button><div class="faqa">Доход по облигациям казахстанских эмитентов, торгующихся на KASE, освобождён от индивидуального подоходного налога. Это одно из преимуществ биржевых облигаций.</div></div>
+    <div class="faq"><button class="faqq">Какие гарантии у инвестора?</button><div class="faqa">Облигации — это ценные бумаги, зарегистрированные АРРФР. ЭКО-Финанс обязана выплачивать купоны и погашать тело по установленному расписанию. Деятельность компании лицензирована и регулируется государством. Все кредиты в портфеле обеспечены залогами недвижимости.</div></div>
+    <div class="faq"><button class="faqq">Можно ли продать облигации досрочно?</button><div class="faqa">Да. Облигации торгуются на KASE — вы можете продать их в любой торговый день через брокерское приложение по рыночной цене.</div></div>
+  </div>
+</section>
+
+<div class="ctab">
+  <h2>Хотите инвестировать?</h2>
+  <p>Получите консультацию по покупке облигаций — бесплатно и без обязательств</p>
+  <div class="ctaa">
+    <a href="kontakty.html" class="btn bw">Получить консультацию</a>
+    <a href="https://wa.me/77019522339" target="_blank" class="btn bg2">WhatsApp</a>
+    <a href="https://t.me/mfoecofinance" target="_blank" class="btn bg2">Telegram</a>
+  </div>
+</div>
+
+<footer><div class="fi2">
+  <div class="ftop">
+    <div class="fbrand"><h3>ТОО «МФО ЭКО-Финанс»</h3><p>Микрофинансовая организация, работающая с ИП и юрлицами Казахстана с 2017 года.</p><div class="fmeta"><div>Лицензия: 02.21.0006M</div><div>БИН: 170140006253</div><div>Банк: АО «Kaspi Bank»</div></div></div>
+    <div class="fcol"><h4>Кредиты</h4><a href="ip.html">Для ИП</a><a href="ul.html">Для юр. лиц</a><a href="ip.html#docs">Список документов</a><a href="ip.html#steps">Этапы получения</a></div>
+    <div class="fcol"><h4>Инвесторам</h4><a href="obligatsii.html">Облигации</a><a href="obligatsii.html#how">Как купить</a><a href="obligatsii.html#schedule">Графики выплат</a><a href="dokumenty.html">Отчётность</a></div>
+    <div class="fcol"><h4>Контакты</h4><a href="tel:+77019522339">+7 701 952 23 39</a><a href="https://wa.me/77019522339" target="_blank">WhatsApp</a><a href="https://t.me/mfoecofinance" target="_blank">Telegram</a><a href="https://www.instagram.com/eco_finance_mfo/" target="_blank">Instagram</a><div class="faddr">г. Алматы, Турксибский р-н,<br>ул. Бекмаханова, 95А<br>Пн–Пт: 9:00–18:00</div></div>
+  </div>
+  <div class="fbot"><span>© 2017–2026 ТОО «МФО ЭКО-Финанс». Все права защищены.</span><div><a href="policy.html">Политика конфиденциальности</a><a href="kontakty.html#complaint">Сообщить о проблеме</a></div></div>
+</div></footer>
+<script>document.querySelectorAll(".faq").forEach(f=>{f.querySelector(".faqq").addEventListener("click",()=>f.classList.toggle("open"))});</script>
+</body></html>
