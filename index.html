@@ -185,7 +185,7 @@ input[type=range]{width:100%;accent-color:var(--g)}
 .resn{font-size:20px;font-weight:700;color:var(--g);letter-spacing:-.5px}
 .cardbtn{width:100%;background:var(--g);color:#fff;border:none;cursor:pointer;font-family:'Geologica',sans-serif;font-size:14px;font-weight:500;padding:13px;border-radius:8px;margin-top:14px;transition:background .2s}
 .cardbtn:hover{background:var(--gm)}
-.floatbadge{position:absolute;top:-14px;right:-14px;background:var(--gold);color:#fff;font-size:11px;font-weight:600;padding:8px 14px;border-radius:100px;white-space:nowrap;box-shadow:0 4px 16px rgba(200,168,75,.4)}
+.floatbadge{background:rgba(255,255,255,.2);color:#fff;font-size:11px;font-weight:500;padding:4px 10px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-top:2px}
 /* services */
 .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
 .scard{background:#fff;border:1px solid var(--brd);border-radius:var(--rL);padding:28px;transition:all .25s;position:relative;overflow:hidden;text-decoration:none;color:inherit;display:block}
@@ -239,9 +239,14 @@ input[type=range]{width:100%;accent-color:var(--g)}
     </div>
   </div>
   <div style="position:relative">
-    <div class="floatbadge">Выдача за 24 часа</div>
     <div class="hcard">
-      <div class="hch"><h3>Рассчитайте платёж</h3><div class="hcrate">30<span>% год.</span></div></div>
+      <div class="hch">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+          <h3>Рассчитайте платёж</h3>
+          <span class="floatbadge">Выдача за 24 часа</span>
+        </div>
+        <div class="hcrate">30<span>% год.</span></div>
+      </div>
       <div class="hcb">
         <div class="slrow">
           <div class="sllbl"><span>Сумма кредита</span><span class="slv" id="amtL">20 000 000 ₸</span></div>
