@@ -1,40 +1,13 @@
 (function() {
   const SYSTEM = `Ты — умный ИИ-ассистент МФО «ЭКО-Финанс» (Алматы, Казахстан). Отвечай кратко, дружелюбно и по делу. Всегда на русском языке.
 
-О компании:
-- Полное название: ТОО «Микрофинансовая организация «ЭКО-Финанс»»
-- Лицензия АРРФР № 02.21.0006M, с 2017 года
-- Адрес: г. Алматы, Турксибский р-н, ул. Бекмаханова, 95А
-- Телефон/WhatsApp: +7 702 100 27 57
-- Telegram: @eco_finance17
-- Instagram: @eco_finance_2017
-- Email: info@eco-finance.kz
-- Режим работы: Пн–Пт 9:00–18:00
+О компании: ТОО «МФО ЭКО-Финанс», лицензия АРРФР № 02.21.0006M, с 2017 года. Адрес: г. Алматы, ул. Бекмаханова, 95А. Телефон: +7 702 100 27 57. Email: info@eco-finance.kz. Пн-Пт 9:00-18:00.
 
-КРЕДИТЫ (для ИП и юр. лиц):
-- Сумма: до 75 000 000 тенге
-- Ставка: от 30% годовых
-- Срок: до 36 месяцев
-- Залог: жилая и коммерческая недвижимость в г. Алматы
-- Выдача: за 1 рабочий день
-- 0% комиссия за выдачу и обслуживание
-- Погашение ОД в конце срока, ежемесячно только проценты
-- Досрочное погашение без штрафов
-- Справки о доходах не нужны
+КРЕДИТЫ: до 75 млн тенге, от 30% годовых, до 36 месяцев, под залог недвижимости в Алматы, выдача за 1 день, 0% комиссия, ОД в конце срока, досрочное погашение без штрафов, справки о доходах не нужны.
 
-Документы для ИП: удостоверение личности, отчёт оценщика на залог, справка о правах на недвижимость, правоустанавливающие документы, выписка со счёта за 12 мес., справка из налоговой.
+ОБЛИГАЦИИ: 22% годовых, ежеквартально, KASE тикер MFEC, 0 дефолтов, доход не облагается ИПН. 3-й выпуск MFECb2 идёт размещение, ISIN KZ2P00011380. Купить через Jusan.
 
-ОБЛИГАЦИИ (для инвесторов):
-- Ставка: 22% годовых (фиксированная)
-- Выплаты: ежеквартально
-- Торгуются на KASE, тикер MFEC
-- 0 дефолтов по купонным выплатам за всё время
-- Доход не облагается ИПН
-- 2-й выпуск MFECb1: 400 млн тг, погашение тела — август 2026
-- 3-й выпуск MFECb2: до 220 млн тг, ISIN KZ2P00011380, идёт размещение
-- Купить через Jusan: Инвестиции → Брокерский счёт → «МФО ЭКО-Финанс»
-
-Если не знаешь — предложи позвонить +7 702 100 27 57 или написать в WhatsApp.`;
+Если не знаешь — предложи позвонить +7 702 100 27 57.`;
 
   const WORKER = 'https://small-mouse-33ec.dzhunusov.workers.dev';
 
@@ -90,7 +63,7 @@
     <div class="ef-qk" id="ef-qk">
       <button>Условия кредита</button>
       <button>Какие документы?</button>
-      <button>Облигации — как купить?</button>
+      <button>Как купить облигации?</button>
       <button>Какая ставка?</button>
     </div>
     <div class="ef-ir">
@@ -118,12 +91,28 @@
     document.getElementById('ef-qk').style.display='none';
     addMsg(text,'u'); msgs.push({role:'user',content:text}); typing(true);
     try{
-      const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({model:'claude-3-5-haiku-20241022',max_tokens:800,system:SYSTEM,messages:msgs.slice(-8)})});
-      const d=await r.json(); typing(false);
-      const reply=d.content?.[0]?.text||'Ошибка. Позвоните: +7 702 100 27 57';
-      addMsg(reply,'b'); msgs.push({role:'assistant',content:reply});
-    }catch(e){ typing(false); addMsg('Ошибка соединения. Позвоните: +7 702 100 27 57','b'); }
+      const payload = {
+        model: 'claude-3-5-haiku-20241022',
+        max_tokens: 800,
+        system: SYSTEM,
+        messages: msgs.slice(-8)
+      };
+      const r = await fetch(WORKER, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const data = await r.json();
+      typing(false);
+      const reply = (data.content && data.content[0] && data.content[0].text)
+        ? data.content[0].text
+        : 'Ошибка. Позвоните: +7 702 100 27 57';
+      addMsg(reply,'b');
+      msgs.push({role:'assistant',content:reply});
+    }catch(e){
+      typing(false);
+      addMsg('Ошибка соединения. Позвоните: +7 702 100 27 57','b');
+    }
     loading=false; sb.disabled=false; inp.focus();
   }
 })();
