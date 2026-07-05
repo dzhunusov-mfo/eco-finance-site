@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <h4>Контакты</h4>
           <a href="tel:+77019522339">+7 701 952 23 39</a>
           <a href="https://wa.me/77019522339" target="_blank">WhatsApp</a>
-          <a href="https://t.me/eco_finance_2017" target="_blank">Telegram менеджер</a>
+          <a href="https://t.me/eco_finance_2017" target="_blank">Telegram</a>
           <a href="https://t.me/ecofenance" target="_blank">Telegram канал</a>
           <a href="https://www.instagram.com/eco_finance_mfo/" target="_blank">Instagram</a>
           <div class="footer-address">г. Алматы, Турксибский р-н,<br>ул. Бекмаханова, 95А<br>Пн–Пт: 9:00–18:00</div>
