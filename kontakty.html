@@ -281,20 +281,24 @@ async function submitForm(){
   var comment=document.getElementById('fcomment').value.trim()||'—';
   var btn=document.querySelector('#form-wrap button');
   btn.disabled=true; btn.textContent='Отправка...';
-  var text='🔔 *Новая заявка с сайта eco-finance.kz*\n\n'
-    +'👤 Имя: '+name+'\n'
-    +'📞 Телефон: '+phone+'\n'
-    +'📋 Тип: '+type+'\n'
-    +'💬 Комментарий: '+comment;
+  var ok=false;
   try{
-    await fetch('https://api.telegram.org/bot6948729735:AAFXe7BoTp8he3trqDpd0UMof2XckY0FBN8/sendMessage',{
+    var r=await fetch('https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/site-lead',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({chat_id:'900142233',text:text,parse_mode:'Markdown'})
+      body:JSON.stringify({name:name,phone:phone,type:type,comment:comment})
     });
+    ok=r.ok;
   }catch(e){}
-  document.getElementById('successMsg').style.display='block';
-  btn.textContent='Отправлено ✓';
+  if(ok){
+    document.getElementById('successMsg').style.display='block';
+    btn.textContent='Отправлено ✓';
+  }else{
+    btn.disabled=false; btn.textContent='Отправить заявку →';
+    var m=document.getElementById('successMsg');
+    m.style.display='block'; m.style.color='#b00020';
+    m.textContent='⚠️ Не удалось отправить заявку. Позвоните нам: +7 702 100 27 57 или напишите в WhatsApp.';
+  }
 }
 </script>
 
