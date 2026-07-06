@@ -1,0 +1,14 @@
+# Секреты и данные заёмщиков (аудит токенов 06.07.2026)
+.secrets/
+*.env
+.env.*
+loans.json
+*.sql
+settings.local*.json
+*.xls
+*.xlsx
+
+# Системное
+.DS_Store
+node_modules
+*.log
