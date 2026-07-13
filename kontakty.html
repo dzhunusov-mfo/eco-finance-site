@@ -244,6 +244,14 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
             К сожалению, принять такую заявку не сможем: мы кредитуем только бизнес — ИП и юридические лица, на предпринимательские цели. Потребительские займы физическим лицам не выдаём.<br>
             Если вы зарегистрированы как индивидуальный предприниматель — выберите «Кредит для ИП».
           </div>
+          <div id="ipHint" style="display:none;background:#eef6f0;border:1px solid #bcd9c4;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.65;margin:0 0 16px">
+            Для ИП есть онлайн-заявка через личный кабинет — самый быстрый путь: анкета, загрузка документов и статус рассмотрения в одном месте.<br>
+            <a href="cabinet.html" class="btn bp" style="margin-top:10px;font-size:14px">Подать заявку в личном кабинете →</a><br>
+            <span style="color:var(--mut)">Или оставьте телефон ниже — кредитный менеджер свяжется с вами.</span>
+          </div>
+          <div id="ulHint" style="display:none;background:#eef6f0;border:1px solid #bcd9c4;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.65;margin:0 0 16px">
+            Заявка уйдёт напрямую кредитному менеджеру — он свяжется с вами, обсудит условия и список документов. Личный кабинет для этого не нужен.
+          </div>
           <div class="form-group">
             <label>Сумма займа, тг</label>
             <input type="text" id="famount" inputmode="numeric" placeholder="10 000 000">
@@ -287,8 +295,11 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
 </div></footer>
 <script>
 function typeChanged(){
-  var fiz=document.getElementById('ftype').value==='fiz';
+  var v=document.getElementById('ftype').value;
+  var fiz=v==='fiz';
   document.getElementById('fizWarn').style.display=fiz?'block':'none';
+  document.getElementById('ipHint').style.display=v==='Кредит для ИП'?'block':'none';
+  document.getElementById('ulHint').style.display=v==='Кредит для юр. лица (ТОО)'?'block':'none';
   var btn=document.querySelector('#form-wrap button');
   btn.disabled=fiz;
   btn.style.opacity=fiz?'.45':'';
