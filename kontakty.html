@@ -235,14 +235,8 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
               <option value="">Выберите...</option>
               <option>Кредит для ИП</option>
               <option>Кредит для юр. лица (ТОО)</option>
-              <option value="fiz">Кредит на личные цели (я физлицо)</option>
               <option>Облигации — консультация</option>
-              <option>Другое</option>
             </select>
-          </div>
-          <div id="fizWarn" style="display:none;background:#fdf1ee;border:1px solid #e3b7ab;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.65;margin:0 0 16px;color:#8a3b2a">
-            К сожалению, принять такую заявку не сможем: мы кредитуем только бизнес — ИП и юридические лица, на предпринимательские цели. Потребительские займы физическим лицам не выдаём.<br>
-            Если вы зарегистрированы как индивидуальный предприниматель — выберите «Кредит для ИП».
           </div>
           <div id="ipHint" style="display:none;background:#eef6f0;border:1px solid #bcd9c4;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.65;margin:0 0 16px">
             Для ИП есть онлайн-заявка через личный кабинет — самый быстрый путь: анкета, загрузка документов и статус рассмотрения в одном месте.<br>
@@ -296,20 +290,14 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
 <script>
 function typeChanged(){
   var v=document.getElementById('ftype').value;
-  var fiz=v==='fiz';
-  document.getElementById('fizWarn').style.display=fiz?'block':'none';
   document.getElementById('ipHint').style.display=v==='Кредит для ИП'?'block':'none';
   document.getElementById('ulHint').style.display=v==='Кредит для юр. лица (ТОО)'?'block':'none';
-  var btn=document.querySelector('#form-wrap button');
-  btn.disabled=fiz;
-  btn.style.opacity=fiz?'.45':'';
 }
 async function submitForm(){
   var phone=document.getElementById('fphone').value.trim();
   if(!phone){alert('Укажите номер телефона');return;}
   var type=document.getElementById('ftype').value;
   if(!type){alert('Выберите тип обращения');return;}
-  if(type==='fiz'){typeChanged();return;}
   var name=document.getElementById('fname').value.trim()||'Не указано';
   var amount=document.getElementById('famount').value.trim()||'—';
   var term=document.getElementById('fterm').value.trim()||'—';
