@@ -240,6 +240,14 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
             </select>
           </div>
           <div class="form-group">
+            <label>Сумма займа, тг</label>
+            <input type="text" id="famount" inputmode="numeric" placeholder="10 000 000">
+          </div>
+          <div class="form-group">
+            <label>Срок, месяцев</label>
+            <input type="text" id="fterm" inputmode="numeric" placeholder="12">
+          </div>
+          <div class="form-group">
             <label>Комментарий / вопрос</label>
             <textarea id="fcomment" placeholder="Опишите ваш запрос..."></textarea>
           </div>
@@ -278,6 +286,8 @@ async function submitForm(){
   if(!phone){alert('Укажите номер телефона');return;}
   var name=document.getElementById('fname').value.trim()||'Не указано';
   var type=document.getElementById('ftype').value||'Не указано';
+  var amount=document.getElementById('famount').value.trim()||'—';
+  var term=document.getElementById('fterm').value.trim()||'—';
   var comment=document.getElementById('fcomment').value.trim()||'—';
   var btn=document.querySelector('#form-wrap button');
   btn.disabled=true; btn.textContent='Отправка...';
@@ -286,7 +296,7 @@ async function submitForm(){
     var r=await fetch('https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/site-lead',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:name,phone:phone,type:type,comment:comment})
+      body:JSON.stringify({name:name,phone:phone,type:type,amount:amount,term:term,comment:comment})
     });
     ok=r.ok;
   }catch(e){}
