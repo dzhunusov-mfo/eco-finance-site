@@ -220,6 +220,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
     <div>
       <div class="ccard">
         <h3>Оставить заявку</h3>
+        <p style="font-size:13px;color:var(--mut);line-height:1.6;margin:0 0 14px">Выдаём займы только бизнесу — ИП и юридическим лицам, на предпринимательские цели. Потребительские кредиты физическим лицам не предоставляем.</p>
         <div id="form-wrap">
           <div class="form-group">
             <label>Ваше имя</label>
@@ -230,14 +231,19 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
             <input type="tel" id="fphone" placeholder="+7 700 000 00 00" required>
           </div>
           <div class="form-group">
-            <label>Тип обращения</label>
-            <select id="ftype">
+            <label>Тип обращения *</label>
+            <select id="ftype" onchange="typeChanged()">
               <option value="">Выберите...</option>
               <option>Кредит для ИП</option>
-              <option>Кредит для юр. лица</option>
+              <option>Кредит для юр. лица (ТОО)</option>
+              <option value="fiz">Кредит на личные цели (я физлицо)</option>
               <option>Облигации — консультация</option>
               <option>Другое</option>
             </select>
+          </div>
+          <div id="fizWarn" style="display:none;background:#fdf1ee;border:1px solid #e3b7ab;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.65;margin:0 0 16px;color:#8a3b2a">
+            К сожалению, принять такую заявку не сможем: мы кредитуем только бизнес — ИП и юридические лица, на предпринимательские цели. Потребительские займы физическим лицам не выдаём.<br>
+            Если вы зарегистрированы как индивидуальный предприниматель — выберите «Кредит для ИП».
           </div>
           <div class="form-group">
             <label>Сумма займа, тг</label>
@@ -281,11 +287,20 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
   <div class="fbot"><span>© 2017–2026 ТОО «МФО ЭКО-Финанс». Все права защищены.</span><div><a href="policy.html">Политика конфиденциальности</a><a href="kontakty.html#complaint">Сообщить о проблеме</a></div></div>
 </div></footer>
 <script>
+function typeChanged(){
+  var fiz=document.getElementById('ftype').value==='fiz';
+  document.getElementById('fizWarn').style.display=fiz?'block':'none';
+  var btn=document.querySelector('#form-wrap button');
+  btn.disabled=fiz;
+  btn.style.opacity=fiz?'.45':'';
+}
 async function submitForm(){
   var phone=document.getElementById('fphone').value.trim();
   if(!phone){alert('Укажите номер телефона');return;}
+  var type=document.getElementById('ftype').value;
+  if(!type){alert('Выберите тип обращения');return;}
+  if(type==='fiz'){typeChanged();return;}
   var name=document.getElementById('fname').value.trim()||'Не указано';
-  var type=document.getElementById('ftype').value||'Не указано';
   var amount=document.getElementById('famount').value.trim()||'—';
   var term=document.getElementById('fterm').value.trim()||'—';
   var comment=document.getElementById('fcomment').value.trim()||'—';
