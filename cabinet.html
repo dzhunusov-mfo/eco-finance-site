@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ИП Экспресс — личный кабинет | ЭКО-Финанс</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="description" content="Онлайн-заявка на микрокредит для ИП: 5–10 млн ₸ без залога под гарантию. Загрузите документы онлайн — договор подпишете в офисе за один визит.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#1a5c3a;--gm:#2d7d52;--gl:#e8f5ee;--ga:#3fa86e;--gold:#c8a84b;--dark:#0f1f16;--text:#1a2820;--mut:#5a7060;--brd:#d4e4da;--bg:#f7faf8;--r:10px;--rL:16px}
+body{font-family:'Geologica',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:100;background:rgba(247,250,248,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--brd);padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between}
+.nl{display:flex;align-items:center;gap:10px;text-decoration:none}
+.ni{height:40px}.nt{font-size:16px;font-weight:600;color:var(--g)}.ns{font-size:11px;color:var(--mut)}
+.nm a{text-decoration:none;color:var(--mut);font-size:14px;padding:8px 14px;border-radius:8px}
+.nm a:hover{background:var(--gl);color:var(--g)}
+.wrap{max-width:760px;margin:0 auto;padding:40px 20px 80px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);color:var(--dark);line-height:1.2;margin-bottom:8px}
+.sub{color:var(--mut);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--brd);border-radius:var(--rL);padding:28px;margin-bottom:20px}
+.tabs{display:flex;gap:8px;margin-bottom:24px}
+.tab{flex:1;text-align:center;padding:12px;border-radius:var(--r);border:1.5px solid var(--brd);cursor:pointer;font-weight:500;background:#fff}
+.tab.on{background:var(--g);color:#fff;border-color:var(--g)}
+label{display:block;font-size:13px;font-weight:500;color:var(--mut);margin:14px 0 4px}
+input,select{width:100%;padding:12px 14px;border:1.5px solid var(--brd);border-radius:var(--r);font-family:inherit;font-size:15px;background:#fff}
+input:focus,select:focus{outline:none;border-color:var(--ga)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-size:15px;font-weight:500;padding:13px 26px;border-radius:var(--r);border:none;cursor:pointer;text-decoration:none;background:var(--g);color:#fff;width:100%;margin-top:20px;transition:all .2s}
+.btn:hover{background:var(--gm)}.btn:disabled{opacity:.5;cursor:wait}
+.hint{font-size:12.5px;color:var(--mut);margin-top:6px}
+.codes{background:var(--gl);border:1.5px dashed var(--ga);border-radius:var(--rL);padding:22px;text-align:center;margin:18px 0}
+.codes b{font-size:22px;letter-spacing:1px;color:var(--g);display:block;margin:4px 0}
+.doc{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--brd)}
+.doc:last-child{border-bottom:none}
+.doc .st{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--bg);border:1.5px solid var(--brd);color:var(--mut)}
+.doc.up .st{background:var(--g);border-color:var(--g);color:#fff}
+.doc .nm2{flex:1;font-size:14px}
+.doc .cnt{font-size:11.5px;color:var(--mut)}
+.doc .add{font-size:13px;color:var(--g);font-weight:500;cursor:pointer;white-space:nowrap;background:var(--gl);border:none;padding:7px 13px;border-radius:8px;font-family:inherit}
+.doc .add:hover{background:var(--ga);color:#fff}
+.status{padding:14px 18px;border-radius:var(--r);font-size:14.5px;margin-bottom:18px}
+.s-docs{background:var(--gl);color:var(--g)}
+.s-review{background:#fdf6e3;color:#8a6d1a}
+.s-approved{background:var(--g);color:#fff}
+.s-declined{background:#fbeaea;color:#a33}
+.err{color:#a33;font-size:13.5px;margin-top:10px;display:none}
+.note{background:#fdf6e3;border-radius:var(--r);padding:14px 16px;font-size:13px;color:#6b5510;margin-top:18px}
+footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:var(--mut);text-align:center}
+@media(max-width:640px){nav{padding:0 16px}.nm{display:none}}
+</style></head><body>
+<nav><a class="nl" href="index.html"><img class="ni" src="logo.png" alt=""><span><span class="nt">ЭКО-Финанс</span><br><span class="ns">Микрофинансовая организация</span></span></a>
+<div class="nm"><a href="index.html">Главная</a><a href="ip.html">Для ИП</a><a href="kontakty.html">Контакты</a></div></nav>
+
+<div class="wrap">
+<h1>ИП Экспресс — онлайн-кабинет</h1>
+<p class="sub">Микрокредит 5–10 млн ₸ для ИП без залога, под гарантию физического лица. Заявка и документы — онлайн, договор подпишете в офисе за один визит.</p>
+
+<div class="tabs">
+  <div class="tab on" id="tabNew" onclick="showTab('new')">Новая заявка</div>
+  <div class="tab" id="tabCab" onclick="showTab('cab')">Мой кабинет</div>
+</div>
+
+<!-- ══ НОВАЯ ЗАЯВКА ══ -->
+<div class="card" id="paneNew">
+  <label>ФИО индивидуального предпринимателя *</label>
+  <input id="fName" placeholder="Иванов Иван Иванович">
+  <label>ИИН *</label>
+  <input id="fIin" maxlength="12" inputmode="numeric" placeholder="12 цифр">
+  <label>Телефон *</label>
+  <input id="fPhone" placeholder="+7 ___ ___ __ __">
+  <label>Сумма, тенге *</label>
+  <input id="fAmount" inputmode="numeric" placeholder="от 5 000 000 до 10 000 000">
+  <label>Срок, месяцев</label>
+  <select id="fTerm"><option>3</option><option selected>6</option><option>9</option><option>12</option></select>
+  <label>ФИО гаранта (физическое лицо)</label>
+  <input id="fGar" placeholder="Кто выступит гарантом по займу">
+  <label>Телефон гаранта</label>
+  <input id="fGarPhone" placeholder="+7 ___ ___ __ __">
+  <label style="display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:13px;color:var(--text);font-weight:400">
+    <input type="checkbox" id="fConsent" style="width:18px;height:18px;margin-top:2px">
+    <span>Даю согласие на сбор и обработку персональных данных, запрос кредитного отчёта в кредитных бюро и раскрытие сведений, составляющих тайну предоставления микрокредита, поставщикам ИТ-услуг ТОО «МФО «ЭКО-Финанс» (<a href="policy.html" target="_blank">политика</a>). Цель микрокредита — пополнение оборотных средств для осуществления предпринимательской деятельности.</span>
+  </label>
+  <button class="btn" id="btnApply" onclick="apply()">Отправить заявку</button>
+  <div class="err" id="errNew"></div>
+  <div class="note">После отправки вы получите <b>номер заявки</b> и <b>код доступа</b> — сохраните их: по ним вы будете входить в кабинет, загружать документы и следить за решением.</div>
+</div>
+
+<!-- ══ КОДЫ ПОСЛЕ ЗАЯВКИ ══ -->
+<div class="card" id="paneCodes" style="display:none">
+  <div class="codes">
+    <div style="font-size:13px;color:var(--mut)">Номер заявки</div><b id="showApp"></b>
+    <div style="font-size:13px;color:var(--mut);margin-top:10px">Код доступа</div><b id="showAcc"></b>
+  </div>
+  <p style="font-size:14px;color:var(--mut)">📱 Сфотографируйте или запишите эти коды — они понадобятся для входа в кабинет. Мы их не восстановим онлайн (только по звонку в офис).</p>
+  <button class="btn" onclick="enterCabinet()">Перейти к загрузке документов →</button>
+</div>
+
+<!-- ══ КАБИНЕТ ══ -->
+<div class="card" id="paneLogin" style="display:none">
+  <label>Номер заявки</label>
+  <input id="lApp" placeholder="IPX-XXXX-XXXX" style="text-transform:uppercase">
+  <label>Код доступа</label>
+  <input id="lAcc" placeholder="8 символов" style="text-transform:uppercase">
+  <button class="btn" onclick="login()">Войти</button>
+  <div class="err" id="errLogin"></div>
+</div>
+
+<div id="paneCab" style="display:none">
+  <div class="status" id="stBox"></div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:6px">Документы по чек-листу</div>
+    <div class="hint" style="margin-bottom:12px">Форматы: PDF, JPG, PNG, XLSX — до 15 МБ. Можно загрузить несколько файлов на один пункт.</div>
+    <div id="docList"></div>
+    <div class="err" id="errUp"></div>
+  </div>
+  <div class="note">Договор и договор гарантии подписываются в офисе: Алматы, при себе — оригинал удостоверения (вашего и гаранта). Деньги перечисляются на текущий счёт ИП в день подписания.</div>
+</div>
+
+</div>
+<footer>ТОО «Микрофинансовая организация «ЭКО-Финанс» · <a href="policy.html">Политика обработки данных</a> · <a href="kontakty.html">Контакты</a></footer>
+
+<input type="file" id="fileInput" style="display:none" accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx">
+<script>
+const FN = "https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/ipx-cabinet";
+const LS = "ipx_session";
+let sess = null, docs = {}, pendingKey = null;
+
+const $ = id => document.getElementById(id);
+const STATUS_TEXT = {
+  docs: ["s-docs", "📋 Заявка принята — загрузите документы по чек-листу. Мы начнём рассмотрение, как только комплект будет полным."],
+  review: ["s-review", "⏳ Документы на рассмотрении. Обычно решение занимает 1–2 рабочих дня — статус обновится здесь."],
+  approved: ["s-approved", "✅ Одобрено! Ждём вас в офисе для подписания договора. Деньги — на счёт ИП в день подписания."],
+  declined: ["s-declined", "К сожалению, по заявке принято отрицательное решение."],
+};
+
+function showTab(t){
+  $("tabNew").classList.toggle("on", t==="new");
+  $("tabCab").classList.toggle("on", t==="cab");
+  $("paneNew").style.display = t==="new" ? "" : "none";
+  $("paneCodes").style.display = "none";
+  const logged = !!sess;
+  $("paneLogin").style.display = t==="cab" && !logged ? "" : "none";
+  $("paneCab").style.display = t==="cab" && logged ? "" : "none";
+  if (t==="cab" && logged) refresh();
+}
+
+async function apply(){
+  const err = $("errNew"); err.style.display = "none";
+  if (!$("fConsent").checked) return showErr(err, "Нужно согласие на обработку данных");
+  const amount = Number($("fAmount").value.replace(/\D/g,""));
+  const body = {
+    action: "apply", name: $("fName").value, iin: $("fIin").value,
+    phone: $("fPhone").value, amount, term: Number($("fTerm").value),
+    guarantor_name: $("fGar").value, guarantor_phone: $("fGarPhone").value, consent: true,
+  };
+  if (!body.name.trim() || !body.phone.trim()) return showErr(err, "Заполните ФИО и телефон");
+  if (!(amount >= 1000000 && amount <= 20000000)) return showErr(err, "Сумма — от 1 до 20 млн тенге");
+  const b = $("btnApply"); b.disabled = true; b.textContent = "Отправляем…";
+  try {
+    const r = await (await fetch(FN, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)})).json();
+    if (!r.ok) throw new Error(r.error || "ошибка");
+    sess = {app: r.app_code, acc: r.access_code}; docs = r.docs;
+    localStorage.setItem(LS, JSON.stringify(sess));
+    $("showApp").textContent = r.app_code; $("showAcc").textContent = r.access_code;
+    $("paneNew").style.display = "none"; $("paneCodes").style.display = "";
+  } catch(e){ showErr(err, "Не получилось отправить: " + e.message); }
+  b.disabled = false; b.textContent = "Отправить заявку";
+}
+
+function enterCabinet(){ showTab("cab"); }
+
+async function login(){
+  const err = $("errLogin"); err.style.display = "none";
+  sess = {app: $("lApp").value.trim().toUpperCase(), acc: $("lAcc").value.trim().toUpperCase()};
+  const ok = await refresh(true);
+  if (ok) { localStorage.setItem(LS, JSON.stringify(sess)); showTab("cab"); }
+  else { sess = null; showErr(err, "Не нашли заявку — проверьте номер и код"); }
+}
+
+async function refresh(silent){
+  try {
+    const r = await (await fetch(FN, {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({action:"status", app_code: sess.app, access_code: sess.acc})})).json();
+    if (!r.ok) return false;
+    docs = r.docs;
+    const [cls, txt] = STATUS_TEXT[r.status] || STATUS_TEXT.docs;
+    $("stBox").className = "status " + cls;
+    $("stBox").innerHTML = `<b>${sess.app}</b> · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес<br>${txt}` +
+      (r.decision_comment ? `<br><span style="opacity:.85">${r.decision_comment}</span>` : "");
+    renderDocs(r.checklist || {});
+    return true;
+  } catch { return false; }
+}
+
+function renderDocs(cl){
+  $("docList").innerHTML = Object.entries(docs).map(([k, title]) => {
+    const st = cl[k];
+    return `<div class="doc ${st?.uploaded ? "up" : ""}">
+      <div class="st">${st?.uploaded ? "✓" : ""}</div>
+      <div class="nm2">${title}${st?.files ? ` <span class="cnt">· файлов: ${st.files}</span>` : ""}</div>
+      <button class="add" onclick="pick('${k}')">${st?.uploaded ? "+ ещё" : "Загрузить"}</button>
+    </div>`;
+  }).join("");
+}
+
+function pick(key){ pendingKey = key; $("fileInput").value = ""; $("fileInput").click(); }
+
+$("fileInput").addEventListener("change", async () => {
+  const f = $("fileInput").files[0];
+  if (!f || !pendingKey) return;
+  const err = $("errUp"); err.style.display = "none";
+  if (f.size > 15*1024*1024) return showErr(err, "Файл больше 15 МБ");
+  const fd = new FormData();
+  fd.append("app_code", sess.app); fd.append("access_code", sess.acc);
+  fd.append("doc_key", pendingKey); fd.append("file", f);
+  const boxes = document.querySelectorAll(".add"); boxes.forEach(b => b.disabled = true);
+  try {
+    const r = await (await fetch(FN, {method:"POST", body: fd})).json();
+    if (!r.ok) throw new Error(r.error || "ошибка");
+    renderDocs(r.checklist);
+  } catch(e){ showErr(err, "Не загрузилось: " + e.message); }
+  boxes.forEach(b => b.disabled = false);
+});
+
+function showErr(el, msg){ el.textContent = msg; el.style.display = "block"; return false; }
+
+// восстановление сессии
+try { sess = JSON.parse(localStorage.getItem(LS)); } catch {}
+if (sess?.app) showTab("cab");
+</script>
+</body></html>
