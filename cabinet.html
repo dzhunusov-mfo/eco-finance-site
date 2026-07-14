@@ -58,11 +58,12 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
 
 <div class="tabs">
   <div class="tab on" id="tabNew" onclick="showTab('new')">Новая заявка</div>
-  <div class="tab" id="tabCab" onclick="showTab('cab')">Мой кабинет</div>
+  <div class="tab" id="tabCab" onclick="showTab('cab')">Уже подавал(а) заявку — войти</div>
 </div>
 
 <!-- ══ НОВАЯ ЗАЯВКА ══ -->
 <div class="card" id="paneNew">
+  <div class="note" style="margin-bottom:22px">Уже подавали заявку и получили номер с кодом доступа? Заходить можно с любого компьютера или телефона — просто <a href="#" onclick="showTab('cab');return false" style="color:var(--g);font-weight:600">войдите в кабинет →</a></div>
   <label>ФИО индивидуального предпринимателя *</label>
   <input id="fName" placeholder="Иванов Иван Иванович">
   <label>ИИН *</label>
@@ -225,8 +226,14 @@ $("fileInput").addEventListener("change", async () => {
 
 function showErr(el, msg){ el.textContent = msg; el.style.display = "block"; return false; }
 
-// восстановление сессии
+// восстановление сессии (тот же браузер) + диплинк для входа с любого устройства
 try { sess = JSON.parse(localStorage.getItem(LS)); } catch {}
-if (sess?.app) showTab("cab");
+const qp = new URLSearchParams(location.search);
+if (sess?.app) {
+  showTab("cab");
+} else if (qp.get("cab")) {
+  showTab("cab");
+  if (qp.get("app")) $("lApp").value = qp.get("app").toUpperCase();
+}
 </script>
 </body></html>
