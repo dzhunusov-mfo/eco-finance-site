@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Админ · ИП Экспресс | ЭКО-Финанс</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#1a5c3a;--gm:#2d7d52;--gl:#e8f5ee;--ga:#3fa86e;--dark:#0f1f16;--text:#1a2820;--mut:#5a7060;--brd:#d4e4da;--bg:#f7faf8;--r:10px;--rL:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:16px;padding:20px}
+.wrap{max-width:720px;margin:0 auto}
+h1{font-size:22px;color:var(--dark);margin-bottom:16px}
+.card{background:#fff;border:1px solid var(--brd);border-radius:var(--rL);padding:20px;margin-bottom:14px}
+label{display:block;font-size:13px;font-weight:600;color:var(--mut);margin:10px 0 4px}
+input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--brd);border-radius:var(--r);font-family:inherit;font-size:15px;background:#fff}
+textarea{resize:vertical;min-height:70px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-size:15px;font-weight:600;padding:12px 20px;border-radius:var(--r);border:none;cursor:pointer;background:var(--g);color:#fff;width:100%;margin-top:14px}
+.btn:hover{background:var(--gm)}
+.btn.sec{background:var(--gl);color:var(--g)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border:1px solid var(--brd);border-radius:var(--r);margin-bottom:8px;cursor:pointer;background:#fff}
+.row:hover{border-color:var(--ga)}
+.badge{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.b-docs{background:var(--gl);color:var(--g)}
+.b-review{background:#fdf6e3;color:#8a6d1a}
+.b-approved{background:var(--g);color:#fff}
+.b-declined{background:#fbeaea;color:#a33}
+.mut{color:var(--mut);font-size:13px}
+.status-box{padding:14px 18px;border-radius:var(--r);font-size:14.5px;margin-bottom:14px}
+.doc{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--brd);font-size:14px}
+.doc:last-child{border-bottom:none}
+.st{width:20px}
+a{color:var(--g)}
+.err{color:#a33;font-size:13.5px;margin-top:8px;display:none}
+</style></head><body>
+<div class="wrap">
+<h1>🔐 Админ · заявки «ИП Экспресс»</h1>
+
+<div class="card" id="paneKey">
+  <label>Админ-ключ</label>
+  <input id="adminKey" type="password" placeholder="ключ доступа">
+  <button class="btn" onclick="saveKey()">Войти</button>
+  <div class="err" id="errKey"></div>
+</div>
+
+<div id="paneList" style="display:none">
+  <button class="btn sec" onclick="loadList()" style="margin-bottom:14px">↻ Обновить список</button>
+  <div id="listBox"></div>
+</div>
+
+<div id="paneDetail" style="display:none">
+  <button class="btn sec" onclick="showList()" style="margin-bottom:14px">← К списку</button>
+  <div class="card">
+    <div id="detHead" style="font-weight:700;margin-bottom:8px"></div>
+    <div class="status-box" id="detStatus"></div>
+    <div id="detChecklist"></div>
+    <div class="mut" id="detFolder" style="margin-top:10px"></div>
+  </div>
+  <div class="card">
+    <label>Изменить статус</label>
+    <select id="decStatus">
+      <option value="docs">docs — сбор документов</option>
+      <option value="review">review — на рассмотрении</option>
+      <option value="approved">approved — одобрено</option>
+      <option value="declined">declined — отказ</option>
+    </select>
+    <label>Комментарий клиенту (виден в кабинете)</label>
+    <textarea id="decComment" placeholder="необязательно"></textarea>
+    <button class="btn" onclick="saveDecision()">Сохранить решение</button>
+    <div class="err" id="errDec"></div>
+  </div>
+</div>
+</div>
+
+<script>
+const FN = "https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/ipx-cabinet";
+const LS = "ipx_admin_key";
+let key = localStorage.getItem(LS) || "";
+let curApp = null;
+const $ = id => document.getElementById(id);
+const STATUS_TEXT = {
+  docs: ["b-docs", "📋 Заявка принята — ждём документы по чек-листу."],
+  review: ["b-review", "⏳ Документы на рассмотрении."],
+  approved: ["b-approved", "✅ Одобрено."],
+  declined: ["b-declined", "❌ Отказ."],
+};
+
+async function call(body){
+  const r = await fetch(FN, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({...body, admin_key: key})});
+  return r.json();
+}
+
+function saveKey(){
+  const v = $("adminKey").value.trim();
+  if (!v) return;
+  key = v; localStorage.setItem(LS, v);
+  loadList();
+}
+
+async function loadList(){
+  const r = await call({action:"admin_list"});
+  if (!r.ok){
+    $("errKey").textContent = "Неверный ключ или ошибка доступа";
+    $("errKey").style.display = "block";
+    localStorage.removeItem(LS); key = "";
+    return;
+  }
+  $("paneKey").style.display = "none";
+  $("paneDetail").style.display = "none";
+  $("paneList").style.display = "";
+  $("listBox").innerHTML = r.rows.map(row => {
+    const done = Object.values(row.checklist || {}).filter(v => v.uploaded).length;
+    const [cls] = STATUS_TEXT[row.status] || ["b-docs"];
+    return `<div class="row" onclick="viewApp('${row.app_code}')">
+      <div>
+        <div style="font-weight:600">${row.app_code}</div>
+        <div class="mut">${Number(row.amount).toLocaleString("ru-RU")} ₸ · ${row.term_months} мес · док-в ${done}/11 · ${row.created_at.slice(0,10)}</div>
+      </div>
+      <div class="badge ${cls}">${row.status}</div>
+    </div>`;
+  }).join("") || `<div class="mut">Заявок нет</div>`;
+}
+
+function showList(){ $("paneDetail").style.display = "none"; $("paneList").style.display = ""; }
+
+async function viewApp(appCode){
+  curApp = appCode;
+  const r = await call({action:"admin_view", app_code: appCode});
+  if (!r.ok) return alert("Не нашли заявку");
+  $("paneList").style.display = "none";
+  $("paneDetail").style.display = "";
+  $("detHead").textContent = `${appCode} · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес`;
+  const [cls, txt] = STATUS_TEXT[r.status] || STATUS_TEXT.docs;
+  $("detStatus").className = "status-box " + cls;
+  $("detStatus").innerHTML = txt + (r.decision_comment ? `<br><span style="opacity:.8">${r.decision_comment}</span>` : "");
+  $("detChecklist").innerHTML = Object.entries(r.docs).map(([k, title]) => {
+    const st = (r.checklist || {})[k];
+    return `<div class="doc"><span class="st">${st?.uploaded ? "✓" : "—"}</span><span>${title}${st?.files ? ` · файлов: ${st.files}` : ""}</span></div>`;
+  }).join("");
+  $("detFolder").innerHTML = `📁 <a href="https://drive.google.com/drive/folders/${r.drive_folder_id}" target="_blank">Папка досье на Drive</a>`;
+  $("decStatus").value = r.status;
+  $("decComment").value = r.decision_comment || "";
+}
+
+async function saveDecision(){
+  const err = $("errDec"); err.style.display = "none";
+  const r = await call({action:"admin_decide", app_code: curApp, status: $("decStatus").value, comment: $("decComment").value});
+  if (!r.ok){ err.textContent = "Не сохранилось: " + (r.error || ""); err.style.display = "block"; return; }
+  viewApp(curApp);
+}
+
+if (key) loadList();
+</script>
+</body></html>
