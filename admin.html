@@ -133,7 +133,7 @@ async function viewApp(appCode){
     const st = (r.checklist || {})[k];
     return `<div class="doc"><span class="st">${st?.uploaded ? "✓" : "—"}</span><span>${title}${st?.files ? ` · файлов: ${st.files}` : ""}</span></div>`;
   }).join("");
-  $("detFolder").innerHTML = `📁 <a href="https://drive.google.com/drive/folders/${r.drive_folder_id}" target="_blank">Папка досье на Drive</a>`;
+  $("detFolder").innerHTML = `📁 <a href="https://drive.google.com/drive/folders/${r.drive_folder_id}" target="_blank" rel="noopener">Папка досье на Drive</a>`;
   $("decStatus").value = r.status;
   $("decComment").value = r.decision_comment || "";
 }
