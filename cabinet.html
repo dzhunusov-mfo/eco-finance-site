@@ -132,7 +132,8 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
 </div>
 <footer>ТОО «Микрофинансовая организация «ЭКО-Финанс» · <a href="policy.html">Политика обработки данных</a> · <a href="kontakty.html">Контакты</a></footer>
 
-<input type="file" id="fileInput" style="display:none" accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx">
+<!-- image/* обязателен: iPhone снимает в HEIC, без него такие фото в диалоге недоступны -->
+<input type="file" id="fileInput" style="display:none" accept="image/*,.heic,.heif,.pdf,.jpg,.jpeg,.png,.xlsx,.xls,.doc,.docx">
 <script>
 const FN = "https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/ipx-cabinet";
 const LS = "ipx_session";
