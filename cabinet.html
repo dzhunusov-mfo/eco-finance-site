@@ -169,7 +169,7 @@ async function apply(){
     guarantor_name: $("fGar").value, guarantor_phone: $("fGarPhone").value, consents,
   };
   if (!body.name.trim() || !body.phone.trim()) return showErr(err, "Заполните ФИО и телефон");
-  if (!(amount >= 1000000 && amount <= 20000000)) return showErr(err, "Сумма — от 1 до 20 млн тенге");
+  if (!(amount >= 5000000 && amount <= 20000000)) return showErr(err, "Сумма — от 5 до 20 млн тенге");
   const b = $("btnApply"); b.disabled = true; b.textContent = "Отправляем…";
   try {
     const r = await (await fetch(FN, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)})).json();
