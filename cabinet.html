@@ -78,10 +78,20 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
   <input id="fGar" placeholder="Кто выступит гарантом по займу">
   <label>Телефон гаранта</label>
   <input id="fGarPhone" placeholder="+7 ___ ___ __ __">
-  <label style="display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:13px;color:var(--text);font-weight:400">
-    <input type="checkbox" id="fConsent" style="width:18px;height:18px;margin-top:2px">
-    <span>Даю согласие на сбор и обработку персональных данных, запрос кредитного отчёта в кредитных бюро и раскрытие сведений, составляющих тайну предоставления микрокредита, поставщикам ИТ-услуг ТОО «МФО «ЭКО-Финанс» (<a href="policy.html" target="_blank" rel="noopener">политика</a>). Цель микрокредита — пополнение оборотных средств для осуществления предпринимательской деятельности.</span>
+  <div style="margin-top:22px;font-weight:600;font-size:14px">Согласия <span style="font-weight:400;color:var(--mut)">— отметьте все три</span></div>
+  <label style="display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-size:13px;color:var(--text);font-weight:400">
+    <input type="checkbox" id="cPd" style="width:18px;height:18px;margin-top:2px">
+    <span>Согласие на сбор и обработку персональных данных, а также на раскрытие сведений, составляющих тайну предоставления микрокредита, поставщикам ИТ-услуг ТОО «МФО «ЭКО-Финанс» (<a href="policy.html" target="_blank" rel="noopener">политика</a>).</span>
   </label>
+  <label style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:13px;color:var(--text);font-weight:400">
+    <input type="checkbox" id="cBki" style="width:18px;height:18px;margin-top:2px">
+    <span>Согласие на запрос кредитного отчёта в кредитных бюро (ПКБ/ГКБ) и предоставление в них информации о заявке и займе.</span>
+  </label>
+  <label style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:13px;color:var(--text);font-weight:400">
+    <input type="checkbox" id="cAuto" style="width:18px;height:18px;margin-top:2px">
+    <span>Согласие на автоматизированную обработку и принятие решения (ст. 19-1): загруженные документы проверяются автоматически, результат влияет на рассмотрение заявки. Вы вправе запросить пересмотр решения человеком.</span>
+  </label>
+  <div class="note" style="margin-top:14px">Цель микрокредита — пополнение оборотных средств для осуществления предпринимательской деятельности.</div>
   <button class="btn" id="btnApply" onclick="apply()">Отправить заявку</button>
   <div class="err" id="errNew"></div>
   <div class="note">После отправки вы получите <b>номер заявки</b> и <b>код доступа</b> — сохраните их: по ним вы будете входить в кабинет, загружать документы и следить за решением.</div>
@@ -148,12 +158,13 @@ function showTab(t){
 
 async function apply(){
   const err = $("errNew"); err.style.display = "none";
-  if (!$("fConsent").checked) return showErr(err, "Нужно согласие на обработку данных");
+  const consents = {pd: $("cPd").checked, bki: $("cBki").checked, auto: $("cAuto").checked};
+  if (!consents.pd || !consents.bki || !consents.auto) return showErr(err, "Отметьте все три согласия — без них заявку принять нельзя");
   const amount = Number($("fAmount").value.replace(/\D/g,""));
   const body = {
     action: "apply", name: $("fName").value, iin: $("fIin").value,
     phone: $("fPhone").value, amount, term: Number($("fTerm").value),
-    guarantor_name: $("fGar").value, guarantor_phone: $("fGarPhone").value, consent: true,
+    guarantor_name: $("fGar").value, guarantor_phone: $("fGarPhone").value, consents,
   };
   if (!body.name.trim() || !body.phone.trim()) return showErr(err, "Заполните ФИО и телефон");
   if (!(amount >= 1000000 && amount <= 20000000)) return showErr(err, "Сумма — от 1 до 20 млн тенге");
