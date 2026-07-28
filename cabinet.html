@@ -216,11 +216,17 @@ $("fileInput").addEventListener("change", async () => {
   fd.append("app_code", sess.app); fd.append("access_code", sess.acc);
   fd.append("doc_key", pendingKey); fd.append("file", f);
   const boxes = document.querySelectorAll(".add"); boxes.forEach(b => b.disabled = true);
+  const btn = document.querySelector(`.doc button[onclick="pick('${pendingKey}')"]`);
+  const oldTxt = btn ? btn.textContent : "";
+  if (btn) btn.textContent = "Проверяем…";
   try {
     const r = await (await fetch(FN, {method:"POST", body: fd})).json();
     if (!r.ok) throw new Error(r.error || "ошибка");
     renderDocs(r.checklist);
+    if (r.review && r.review.accepted === false) showErr(err, "⚠️ " + r.review.reason);
+    else if (r.status) refresh(true);   // комплект мог стать полным — обновляем статус
   } catch(e){ showErr(err, "Не загрузилось: " + e.message); }
+  if (btn) btn.textContent = oldTxt;
   boxes.forEach(b => b.disabled = false);
 });
 
