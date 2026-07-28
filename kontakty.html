@@ -290,6 +290,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
         <h3>Способы связи</h3>
         <a class="cline" href="tel:+77021002757"><div class="cico">📞</div><div><div class="clabel">Телефон</div><div class="cval">+7 702 100 27 57</div></div></a>
         <a class="cline" href="https://wa.me/+77021002757" target="_blank" rel="noopener"><div class="cico">💬</div><div><div class="clabel">WhatsApp</div><div class="cval">+7 702 100 27 57</div></div></a>
+        <a class="cline" href="tel:+77787531870"><div class="cico">🤖</div><div><div class="clabel">ИИ-консультант — ответит сразу, круглосуточно</div><div class="cval">+7 778 753 18 70</div></div></a>
         <a class="cline" href="https://t.me/eco_finance_2017" target="_blank" rel="noopener"><div class="cico">✈️</div><div><div class="clabel">Telegram</div><div class="cval">@eco_finance_2017</div></div></a>
         <a class="cline" href="https://www.instagram.com/eco_finance_2017/" target="_blank" rel="noopener"><div class="cico">📸</div><div><div class="clabel">Instagram</div><div class="cval">@eco_finance_2017</div></div></a>
         <a class="cline" href="mailto:info@eco-finance.kz"><div class="cico">📧</div><div><div class="clabel">Email</div><div class="cval">info@eco-finance.kz</div></div></a>
@@ -311,6 +312,11 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
       <div class="ccard" id="zayavka">
         <h3>Оставить заявку</h3>
         <p style="font-size:13px;color:var(--mut);line-height:1.6;margin:0 0 14px">Выдаём займы только бизнесу — ИП и юридическим лицам, на предпринимательские цели. Потребительские кредиты физическим лицам не предоставляем.</p>
+        <div style="background:#eef6f0;border:1px solid #bcd9c4;border-radius:10px;padding:14px 16px;font-size:13.5px;line-height:1.65;margin:0 0 18px">
+          <b>Вы индивидуальный предприниматель?</b><br>
+          Заявки от ИП принимаются только через личный кабинет: анкета, загрузка документов и статус рассмотрения в одном месте. Телефон оставлять не нужно — решение вы увидите в кабинете.
+          <a href="cabinet.html" class="btn bp" style="margin-top:12px;font-size:14px;display:inline-block">Подать заявку в личном кабинете →</a>
+        </div>
         <div id="form-wrap">
           <div class="form-group">
             <label>Ваше имя</label>
@@ -324,18 +330,16 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
             <label>Тип обращения *</label>
             <select id="ftype" onchange="typeChanged()">
               <option value="">Выберите...</option>
-              <option>Кредит для ИП</option>
               <option>Кредит для юр. лица (ТОО)</option>
               <option>Облигации — консультация</option>
             </select>
           </div>
-          <div id="ipHint" style="display:none;background:#eef6f0;border:1px solid #bcd9c4;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.65;margin:0 0 16px">
-            Для ИП есть онлайн-заявка через личный кабинет — самый быстрый путь: анкета, загрузка документов и статус рассмотрения в одном месте.<br>
-            <a href="cabinet.html" class="btn bp" style="margin-top:10px;font-size:14px">Подать заявку в личном кабинете →</a><br>
-            <span style="color:var(--mut)">Или оставьте телефон ниже — кредитный менеджер свяжется с вами.</span>
-          </div>
           <div id="ulHint" style="display:none;background:#eef6f0;border:1px solid #bcd9c4;border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.65;margin:0 0 16px">
             Заявка уйдёт напрямую кредитному менеджеру — он свяжется с вами, обсудит условия и список документов. Личный кабинет для этого не нужен.
+          </div>
+          <div class="form-group" id="binGroup" style="display:none">
+            <label>БИН юридического лица *</label>
+            <input type="text" id="fbin" maxlength="12" inputmode="numeric" placeholder="12 цифр">
           </div>
           <div class="form-group">
             <label>Сумма займа, тг</label>
@@ -374,21 +378,27 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
     <div class="fbrand"><h3>ТОО «МФО ЭКО-Финанс»</h3><p>Микрофинансовая организация, работающая с ИП и юрлицами Казахстана с 2017 года.</p><div class="fmeta"><div>Лицензия: 02.21.0006M</div><div>БИН: 170140006253</div><div>Банк: АО «Kaspi Bank»</div></div></div>
     <div class="fcol"><h4>Кредиты</h4><a href="ip.html">Для ИП</a><a href="ul.html">Для юр. лиц</a><a href="ip.html#docs">Список документов</a></div>
     <div class="fcol"><h4>Инвесторам</h4><a href="obligatsii.html">Облигации</a><a href="obligatsii.html#schedule">Графики выплат</a><a href="dokumenty.html">Отчётность</a></div>
-    <div class="fcol"><h4>Контакты</h4><a href="tel:+77021002757">+7 702 100 27 57</a><a href="https://wa.me/+77021002757" target="_blank" rel="noopener">WhatsApp</a><a href="https://t.me/eco_finance_2017" target="_blank" rel="noopener">Telegram</a><a href="https://www.instagram.com/eco_finance_2017/" target="_blank" rel="noopener">Instagram</a><div class="faddr">г. Алматы, Турксибский р-н,<br>ул. Бекмаханова, 95А<br>Пн–Пт: 9:00–18:00</div></div>
+    <div class="fcol"><h4>Контакты</h4><a href="tel:+77021002757">+7 702 100 27 57</a><a href="tel:+77787531870">+7 778 753 18 70 — ИИ-консультант 24/7</a><a href="https://wa.me/+77021002757" target="_blank" rel="noopener">WhatsApp</a><a href="https://t.me/eco_finance_2017" target="_blank" rel="noopener">Telegram</a><a href="https://www.instagram.com/eco_finance_2017/" target="_blank" rel="noopener">Instagram</a><div class="faddr">г. Алматы, Турксибский р-н,<br>ул. Бекмаханова, 95А<br>Пн–Пт: 9:00–18:00</div></div>
   </div>
   <div class="fbot"><span>© 2017–2026 ТОО «МФО ЭКО-Финанс». Все права защищены.</span><div><a href="policy.html">Политика конфиденциальности</a><a href="kontakty.html#complaint">Сообщить о проблеме</a></div></div>
 </div></footer>
 <script>
 function typeChanged(){
   var v=document.getElementById('ftype').value;
-  document.getElementById('ipHint').style.display=v==='Кредит для ИП'?'block':'none';
-  document.getElementById('ulHint').style.display=v==='Кредит для юр. лица (ТОО)'?'block':'none';
+  var isUl=v==='Кредит для юр. лица (ТОО)';
+  document.getElementById('ulHint').style.display=isUl?'block':'none';
+  document.getElementById('binGroup').style.display=isUl?'block':'none';
 }
 async function submitForm(){
   var phone=document.getElementById('fphone').value.trim();
   if(!phone){alert('Укажите номер телефона');return;}
   var type=document.getElementById('ftype').value;
   if(!type){alert('Выберите тип обращения');return;}
+  var bin=document.getElementById('fbin').value.replace(/\D/g,'');
+  if(type==='Кредит для юр. лица (ТОО)'&&bin.length!==12){
+    alert('Укажите БИН юридического лица — 12 цифр. Без БИН заявку принять нельзя.');
+    document.getElementById('fbin').focus(); return;
+  }
   var name=document.getElementById('fname').value.trim()||'Не указано';
   var amount=document.getElementById('famount').value.trim()||'—';
   var term=document.getElementById('fterm').value.trim()||'—';
@@ -400,7 +410,7 @@ async function submitForm(){
     var r=await fetch('https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/site-lead',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:name,phone:phone,type:type,amount:amount,term:term,comment:comment})
+      body:JSON.stringify({name:name,phone:phone,type:type,bin:bin,amount:amount,term:term,comment:comment})
     });
     ok=r.ok;
   }catch(e){}
