@@ -195,7 +195,7 @@ async function login(){
 async function refresh(silent){
   try {
     const r = await (await fetch(FN, {method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({action:"status", app_code: sess.app, access_code: sess.acc})})).json();
+      body: JSON.stringify({action:"status", app_code: sess.app, access_code: sess.acc||"", magic: sess.magic||""})})).json();
     if (!r.ok) return false;
     docs = r.docs;
     const [cls, txt] = STATUS_TEXT[r.status] || STATUS_TEXT.docs;
@@ -226,7 +226,7 @@ $("fileInput").addEventListener("change", async () => {
   const err = $("errUp"); err.style.display = "none";
   if (f.size > 15*1024*1024) return showErr(err, "Файл больше 15 МБ");
   const fd = new FormData();
-  fd.append("app_code", sess.app); fd.append("access_code", sess.acc);
+  fd.append("app_code", sess.app); fd.append("access_code", sess.acc||""); fd.append("magic", sess.magic||"");
   fd.append("doc_key", pendingKey); fd.append("file", f);
   const boxes = document.querySelectorAll(".add"); boxes.forEach(b => b.disabled = true);
   const btn = document.querySelector(`.doc button[onclick="pick('${pendingKey}')"]`);
@@ -248,7 +248,13 @@ function showErr(el, msg){ el.textContent = msg; el.style.display = "block"; ret
 // восстановление сессии (тот же браузер) + диплинк для входа с любого устройства
 try { sess = JSON.parse(localStorage.getItem(LS)); } catch {}
 const qp = new URLSearchParams(location.search);
-if (sess?.app) {
+if (qp.get("app") && qp.get("t")) {
+  // ссылка-вход: клиент попадает в свою заявку, не вводя номер и код
+  sess = {app: qp.get("app").toUpperCase(), magic: qp.get("t")};
+  localStorage.setItem(LS, JSON.stringify(sess));
+  history.replaceState(null, "", location.pathname);
+  showTab("cab");
+} else if (sess?.app) {
   showTab("cab");
 } else if (qp.get("cab")) {
   showTab("cab");
