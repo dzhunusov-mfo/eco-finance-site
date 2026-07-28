@@ -191,6 +191,13 @@ h1 em{font-style:italic;color:var(--g)}
 .hcrate{font-family:'Playfair Display',serif;font-size:38px;font-weight:600}
 .hcrate span{font-size:18px}
 .hcb{padding:20px 24px}
+.hcimg{width:100%;height:auto;display:block;aspect-ratio:1200/896;object-fit:cover}
+.hcfacts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;padding:4px 0 16px}
+.hcfn{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--g);letter-spacing:-.3px;line-height:1.2}
+.hcfn span{font-size:12px;font-family:'Geologica',sans-serif;font-weight:400}
+.hcfl{font-size:11px;color:var(--mut);margin-top:3px}
+.hcnote{font-size:12.5px;color:var(--mut);line-height:1.6;text-align:center;padding-bottom:2px}
+.hcnote a{color:var(--g);font-weight:500}
 .slrow{padding:10px 0}
 .sllbl{font-size:13px;color:var(--mut);display:flex;justify-content:space-between;margin-bottom:6px}
 .slv{font-weight:600;color:var(--g)}
@@ -325,27 +332,17 @@ input[type=range]{width:100%;accent-color:var(--g)}
   </div>
   <div style="position:relative">
     <div class="hcard">
-      <div class="hch">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
-          <h3>Рассчитайте платёж</h3>
-          <span class="floatbadge">Выдача за 24 часа</span>
-        </div>
-        <div class="hcrate">30<span>% год.</span></div>
-      </div>
+      <picture>
+        <source srcset="hero-business.webp" type="image/webp">
+        <img src="hero-business.jpg" alt="Предприниматель в своём магазине проверяет остатки товара на планшете" width="1200" height="896" class="hcimg" loading="eager" fetchpriority="high">
+      </picture>
       <div class="hcb">
-        <div class="slrow">
-          <div class="sllbl"><span>Сумма кредита</span><span class="slv" id="amtL">20 000 000 ₸</span></div>
-          <input type="range" min="3" max="75" value="20" id="amt" oninput="calc()">
+        <div class="hcfacts">
+          <div><div class="hcfn">до 75 млн ₸</div><div class="hcfl">сумма займа</div></div>
+          <div><div class="hcfn">от 30% <span>год.</span></div><div class="hcfl">ставка</div></div>
+          <div><div class="hcfn">24 часа</div><div class="hcfl">до выдачи</div></div>
         </div>
-        <div class="slrow">
-          <div class="sllbl"><span>Срок</span><span class="slv" id="termL">12 мес.</span></div>
-          <input type="range" min="3" max="36" value="12" id="term" oninput="calc()">
-        </div>
-        <div class="res">
-          <div><div class="reslbl">Ежемесячный платёж</div><div style="font-size:11px;color:var(--mut);margin-top:2px">только проценты · ОД в конце срока</div></div>
-          <div class="resn" id="pay">500 000 ₸</div>
-        </div>
-        <button class="cardbtn" onclick="location.href='kontakty.html'">Оставить заявку</button>
+        <div class="hcnote">Для ИП — заявка и документы в <a href="cabinet.html">личном кабинете</a>. Юр. лицам — <a href="kontakty.html#zayavka">оставить обращение</a>.</div>
       </div>
     </div>
   </div>
@@ -447,17 +444,6 @@ input[type=range]{width:100%;accent-color:var(--g)}
   </div>
   <div class="fbot"><span>© 2017–2026 ТОО «МФО ЭКО-Финанс». Все права защищены.</span><div><a href="policy.html">Политика конфиденциальности</a><a href="kontakty.html#complaint">Сообщить о проблеме</a></div></div>
 </div></footer>
-<script>
-function fmt(n){return n.toLocaleString('ru-KZ')+' ₸'}
-function calc(){
-  var a=parseInt(document.getElementById('amt').value)*1000000;
-  var t=parseInt(document.getElementById('term').value);
-  document.getElementById('amtL').textContent=fmt(a);
-  document.getElementById('termL').textContent=t+' мес.';
-  document.getElementById('pay').textContent=fmt(Math.round(a*0.30/12));
-}
-calc();
-</script>
 
 
 <script
