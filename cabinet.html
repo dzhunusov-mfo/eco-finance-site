@@ -27,7 +27,12 @@ label{display:block;font-size:13px;font-weight:500;color:var(--mut);margin:14px 
 input,select{width:100%;padding:12px 14px;border:1.5px solid var(--brd);border-radius:var(--r);font-family:inherit;font-size:16px;background:#fff}
 input:focus,select:focus{outline:none;border-color:var(--ga)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-size:15px;font-weight:500;padding:13px 26px;border-radius:var(--r);border:none;cursor:pointer;text-decoration:none;background:var(--g);color:#fff;width:100%;margin-top:20px;transition:all .2s}
-.btn:hover{background:var(--gm)}.btn:disabled{opacity:.5;cursor:wait}
+.btn:hover{background:var(--gm)}.btn:disabled{opacity:.45;cursor:not-allowed;background:var(--mut)}
+.prog{height:8px;border-radius:99px;background:var(--gl);overflow:hidden;margin:2px 0 10px}
+.prog i{display:block;height:100%;background:var(--ga);border-radius:99px;transition:width .3s}
+.fin-t{font-weight:600;margin-bottom:4px}
+.steps{margin:10px 0 0 18px;font-size:14px;color:var(--text)}
+.steps li{margin-bottom:6px}
 .hint{font-size:12.5px;color:var(--mut);margin-top:6px}
 .codes{background:var(--gl);border:1.5px dashed var(--ga);border-radius:var(--rL);padding:22px;text-align:center;margin:18px 0}
 .codes b{font-size:22px;letter-spacing:1px;color:var(--g);display:block;margin:4px 0}
@@ -126,6 +131,8 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
     <div id="docList"></div>
     <div class="err" id="errUp"></div>
   </div>
+  <!-- точка завершения: клиент видит прогресс и сам отправляет заявку на рассмотрение -->
+  <div class="card" id="finishCard"></div>
   <div class="note">Договор и договор гарантии подписываются в офисе: Алматы, при себе — оригинал удостоверения (вашего и гаранта). Деньги перечисляются на текущий счёт ИП в день подписания.</div>
 </div>
 
@@ -137,11 +144,12 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
 <script>
 const FN = "https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/ipx-cabinet";
 const LS = "ipx_session";
-let sess = null, docs = {}, pendingKey = null;
+let sess = null, docs = {}, cl = {}, pendingKey = null;
+const SUBMIT_TXT = "Всё загрузил — отправить на рассмотрение";
 
 const $ = id => document.getElementById(id);
 const STATUS_TEXT = {
-  docs: ["s-docs", "📋 Заявка принята — загрузите документы по чек-листу. Мы начнём рассмотрение, как только комплект будет полным."],
+  docs: ["s-docs", "📋 Заявка принята — загрузите документы по чек-листу. Когда все пункты будут с галочкой, нажмите внизу «Всё загрузил» — с этого начнётся рассмотрение."],
   review: ["s-review", "⏳ Документы на рассмотрении. Обычно решение занимает 1–2 рабочих дня — статус обновится здесь."],
   approved: ["s-approved", "✅ Одобрено! Ждём вас в офисе для подписания договора. Деньги — на счёт ИП в день подписания."],
   declined: ["s-declined", "К сожалению, по заявке принято отрицательное решение."],
@@ -203,11 +211,13 @@ async function refresh(silent){
     $("stBox").innerHTML = `<b>${sess.app}</b> · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес<br>${txt}` +
       (r.decision_comment ? `<br><span style="opacity:.85">${r.decision_comment}</span>` : "");
     renderDocs(r.checklist || {});
+    renderFinish(r.status || "docs");
     return true;
   } catch { return false; }
 }
 
-function renderDocs(cl){
+function renderDocs(checklist){
+  cl = checklist || {};
   $("docList").innerHTML = Object.entries(docs).map(([k, title]) => {
     const st = cl[k];
     return `<div class="doc ${st?.uploaded ? "up" : ""}">
@@ -216,6 +226,55 @@ function renderDocs(cl){
       <button class="add" onclick="pick('${k}')">${st?.uploaded ? "+ ещё" : "Загрузить"}</button>
     </div>`;
   }).join("");
+}
+
+// Блок «что дальше»: пока комплект не собран — прогресс и чего не хватает;
+// когда всё на месте — кнопка «Завершить»; после отправки — понятные шаги.
+function renderFinish(status){
+  const keys = Object.keys(docs), box = $("finishCard");
+  const done = keys.filter(k => cl[k]?.uploaded), miss = keys.filter(k => !cl[k]?.uploaded);
+
+  if (status === "review"){
+    box.innerHTML = `<div class="fin-t" style="color:var(--g);font-size:17px">✅ Документы отправлены — заявка на рассмотрении</div>
+      <div style="font-size:14px;color:var(--mut)">Комплект получен полностью (${keys.length} из ${keys.length}). Больше ничего делать не нужно.</div>
+      <div class="fin-t" style="margin-top:16px">Что дальше</div>
+      <ol class="steps">
+        <li>Проверяем документы и считаем условия — обычно 1–2 рабочих дня.</li>
+        <li>Позвоним по указанному телефону, если что-то нужно уточнить.</li>
+        <li>При одобрении статус здесь изменится, и мы пригласим в офис (Алматы) на подписание — с вами и гарантом, с оригиналами удостоверений.</li>
+        <li>Деньги перечисляем на текущий счёт ИП в день подписания.</li>
+      </ol>
+      <div class="note">Страницу можно закрыть — заходите по своей ссылке в кабинет, чтобы посмотреть статус. Нужно заменить или дослать файл — кнопка «+ ещё» у нужного пункта выше.</div>`;
+    return;
+  }
+  if (status === "approved" || status === "declined"){ box.innerHTML = ""; box.style.display = "none"; return; }
+  box.style.display = "";
+
+  const pct = keys.length ? Math.round(done.length / keys.length * 100) : 0;
+  box.innerHTML = `<div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="fin-t">Загружено ${done.length} из ${keys.length} документов</div>` +
+    (miss.length
+      ? `<div class="hint">Осталось загрузить: ${miss.map(k => docs[k]).join(", ")}.</div>
+         <button class="btn" disabled>${SUBMIT_TXT}</button>
+         <div class="hint" style="text-align:center">Кнопка включится, когда все пункты будут с галочкой</div>`
+      : `<div style="font-size:14px;color:var(--g)">Все документы на месте. Нажмите кнопку — и мы начнём рассмотрение.</div>
+         <button class="btn" onclick="submitApp()">✓ ${SUBMIT_TXT}</button>`) +
+    `<div class="err" id="errFin"></div>`;
+}
+
+async function submitApp(){
+  const btn = $("finishCard").querySelector(".btn");
+  btn.disabled = true; btn.textContent = "Отправляем…";
+  try {
+    const r = await (await fetch(FN, {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({action:"submit", app_code: sess.app, access_code: sess.acc||"", magic: sess.magic||""})})).json();
+    if (!r.ok) throw new Error(r.missing ? "не хватает документов: " + r.missing.join(", ") : (r.error || "ошибка"));
+    await refresh(true);
+    $("stBox").scrollIntoView({behavior:"smooth", block:"center"});
+  } catch(e){
+    showErr($("errFin"), "Не отправилось: " + e.message + ". Попробуйте ещё раз или позвоните нам.");
+    btn.disabled = false; btn.textContent = "✓ " + SUBMIT_TXT;
+  }
 }
 
 function pick(key){ pendingKey = key; $("fileInput").value = ""; $("fileInput").click(); }
@@ -236,8 +295,10 @@ $("fileInput").addEventListener("change", async () => {
     const r = await (await fetch(FN, {method:"POST", body: fd})).json();
     if (!r.ok) throw new Error(r.error || "ошибка");
     renderDocs(r.checklist);
+    renderFinish(r.status || "docs");
     if (r.review && r.review.accepted === false) showErr(err, "⚠️ " + r.review.reason);
-    else if (r.status) refresh(true);   // комплект мог стать полным — обновляем статус
+    // комплект собрался — подводим клиента к кнопке «Завершить», а не оставляем гадать
+    else if (r.complete) $("finishCard").scrollIntoView({behavior:"smooth", block:"center"});
   } catch(e){ showErr(err, "Не загрузилось: " + e.message); }
   if (btn) btn.textContent = oldTxt;
   boxes.forEach(b => b.disabled = false);
