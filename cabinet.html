@@ -235,7 +235,8 @@ function renderFinish(status){
   const done = keys.filter(k => cl[k]?.uploaded), miss = keys.filter(k => !cl[k]?.uploaded);
 
   if (status === "review"){
-    box.innerHTML = `<div class="fin-t" style="color:var(--g);font-size:17px">✅ Документы отправлены — заявка на рассмотрении</div>
+    box.style.display = "";
+    box.innerHTML =`<div class="fin-t" style="color:var(--g);font-size:17px">✅ Документы отправлены — заявка на рассмотрении</div>
       <div style="font-size:14px;color:var(--mut)">Комплект получен полностью (${keys.length} из ${keys.length}). Больше ничего делать не нужно.</div>
       <div class="fin-t" style="margin-top:16px">Что дальше</div>
       <ol class="steps">
