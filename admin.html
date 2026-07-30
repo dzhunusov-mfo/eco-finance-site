@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src https://usoobhhqfrrhfbkpziqf.supabase.co; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Админ · ИП Экспресс | ЭКО-Финанс</title>
 <meta name="robots" content="noindex,nofollow">
 <style>
@@ -72,7 +74,8 @@ a{color:var(--g)}
 <script>
 const FN = "https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/ipx-cabinet";
 const LS = "ipx_admin_key";
-let key = localStorage.getItem(LS) || "";
+const TOTAL_DOCS = 8;   // пунктов в чек-листе (DOC_KEYS в ipx-cabinet); было ошибочно 11
+let key = sessionStorage.getItem(LS) || "";
 let curApp = null;
 const $ = id => document.getElementById(id);
 const STATUS_TEXT = {
@@ -90,7 +93,7 @@ async function call(body){
 function saveKey(){
   const v = $("adminKey").value.trim();
   if (!v) return;
-  key = v; localStorage.setItem(LS, v);
+  key = v; sessionStorage.setItem(LS, v);
   loadList();
 }
 
@@ -99,7 +102,7 @@ async function loadList(){
   if (!r.ok){
     $("errKey").textContent = "Неверный ключ или ошибка доступа";
     $("errKey").style.display = "block";
-    localStorage.removeItem(LS); key = "";
+    sessionStorage.removeItem(LS); key = "";
     return;
   }
   $("paneKey").style.display = "none";
@@ -111,7 +114,7 @@ async function loadList(){
     return `<div class="row" onclick="viewApp('${row.app_code}')">
       <div>
         <div style="font-weight:600">${row.app_code}</div>
-        <div class="mut">${Number(row.amount).toLocaleString("ru-RU")} ₸ · ${row.term_months} мес · док-в ${done}/11 · ${row.created_at.slice(0,10)}</div>
+        <div class="mut">${Number(row.amount).toLocaleString("ru-RU")} ₸ · ${row.term_months} мес · док-в ${done}/${TOTAL_DOCS} · ${row.created_at.slice(0,10)}</div>
       </div>
       <div class="badge ${cls}">${row.status}</div>
     </div>`;
