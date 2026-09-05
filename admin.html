@@ -113,7 +113,7 @@ async function loadList(){
     const [cls] = STATUS_TEXT[row.status] || ["b-docs"];
     return `<div class="row" onclick="viewApp('${row.app_code}')">
       <div>
-        <div style="font-weight:600">${row.app_code} <span class="mut" style="font-weight:400">· ${row.borrower_type || "ИП"}</span></div>
+        <div style="font-weight:600">${row.app_code} <span class="mut" style="font-weight:400">· ${row.borrower_type || "ИП"}${row.ident ? " · " + row.ident : ""}</span></div>
         <div class="mut">${Number(row.amount).toLocaleString("ru-RU")} ₸ · ${row.term_months} мес · док-в ${done}/${row.docs_total ?? "?"} · ${row.created_at.slice(0,10)}</div>
       </div>
       <div class="badge ${cls}">${row.status}</div>
@@ -129,7 +129,7 @@ async function viewApp(appCode){
   if (!r.ok) return alert("Не нашли заявку");
   $("paneList").style.display = "none";
   $("paneDetail").style.display = "";
-  $("detHead").textContent = `${appCode} · ${r.borrower_type || "ИП"} · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес`;
+  $("detHead").textContent = `${appCode} · ${r.borrower_type || "ИП"}${r.ident ? " · " + r.ident : ""} · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес`;
   const [cls, txt] = STATUS_TEXT[r.status] || STATUS_TEXT.docs;
   $("detStatus").className = "status-box " + cls;
   $("detStatus").innerHTML = txt + (r.decision_comment ? `<br><span style="opacity:.8">${r.decision_comment}</span>` : "");
