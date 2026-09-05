@@ -74,7 +74,7 @@ a{color:var(--g)}
 <script>
 const FN = "https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/ipx-cabinet";
 const LS = "ipx_admin_key";
-const TOTAL_DOCS = 8;   // пунктов в чек-листе (DOC_KEYS в ipx-cabinet); было ошибочно 11
+// число пунктов чек-листа приходит от функции (docs_total) — зависит от типа заёмщика, своей копии списка здесь нет
 let key = sessionStorage.getItem(LS) || "";
 let curApp = null;
 const $ = id => document.getElementById(id);
@@ -113,8 +113,8 @@ async function loadList(){
     const [cls] = STATUS_TEXT[row.status] || ["b-docs"];
     return `<div class="row" onclick="viewApp('${row.app_code}')">
       <div>
-        <div style="font-weight:600">${row.app_code}</div>
-        <div class="mut">${Number(row.amount).toLocaleString("ru-RU")} ₸ · ${row.term_months} мес · док-в ${done}/${TOTAL_DOCS} · ${row.created_at.slice(0,10)}</div>
+        <div style="font-weight:600">${row.app_code} <span class="mut" style="font-weight:400">· ${row.borrower_type || "ИП"}</span></div>
+        <div class="mut">${Number(row.amount).toLocaleString("ru-RU")} ₸ · ${row.term_months} мес · док-в ${done}/${row.docs_total ?? "?"} · ${row.created_at.slice(0,10)}</div>
       </div>
       <div class="badge ${cls}">${row.status}</div>
     </div>`;
@@ -129,7 +129,7 @@ async function viewApp(appCode){
   if (!r.ok) return alert("Не нашли заявку");
   $("paneList").style.display = "none";
   $("paneDetail").style.display = "";
-  $("detHead").textContent = `${appCode} · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес`;
+  $("detHead").textContent = `${appCode} · ${r.borrower_type || "ИП"} · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес`;
   const [cls, txt] = STATUS_TEXT[r.status] || STATUS_TEXT.docs;
   $("detStatus").className = "status-box " + cls;
   $("detStatus").innerHTML = txt + (r.decision_comment ? `<br><span style="opacity:.8">${r.decision_comment}</span>` : "");

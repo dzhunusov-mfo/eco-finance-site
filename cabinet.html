@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://usoobhhqfrrhfbkpziqf.supabase.co; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ИП Экспресс — личный кабинет | ЭКО-Финанс</title>
+<title>Онлайн-кабинет «Экспресс» — ИП и ТОО | ЭКО-Финанс</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="Онлайн-заявка на микрокредит для ИП: 5–10 млн ₸ без залога под гарантию. Загрузите документы онлайн — договор подпишете в офисе за один визит.">
+<meta name="description" content="Онлайн-заявка на микрокредит для ИП и ТОО: анкета, загрузка документов по чек-листу и статус рассмотрения в одном кабинете. Договор подпишете в офисе за один визит.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,11 +58,11 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
 @media(max-width:768px){input,select,textarea{font-size:16px!important}} /* форм-поля-16 */
 </style></head><body>
 <nav><a class="nl" href="index.html"><img class="ni" src="logo.png" alt=""><span><span class="nt">ЭКО-Финанс</span><br><span class="ns">Микрофинансовая организация</span></span></a>
-<div class="nm"><a href="index.html">Главная</a><a href="ip.html">Для ИП</a><a href="kontakty.html">Контакты</a></div></nav>
+<div class="nm"><a href="index.html">Главная</a><a href="ip.html">Для ИП</a><a href="ul.html">Для юр. лиц</a><a href="kontakty.html">Контакты</a></div></nav>
 
 <div class="wrap">
-<h1>ИП Экспресс — онлайн-кабинет</h1>
-<p class="sub">Микрокредит 5–10 млн ₸ для ИП без залога, под гарантию физического лица. Заявка и документы — онлайн, договор подпишете в офисе за один визит.</p>
+<h1 id="cabTitle">ИП Экспресс — онлайн-кабинет</h1>
+<p class="sub" id="cabSub">Микрокредит 5–20 млн ₸ для ИП, под гарантию физического лица. Заявка и документы — онлайн, договор подпишете в офисе за один визит.</p>
 
 <div class="tabs">
   <div class="tab on" id="tabNew" onclick="showTab('new')">Новая заявка</div>
@@ -72,20 +72,37 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
 <!-- ══ НОВАЯ ЗАЯВКА ══ -->
 <div class="card" id="paneNew">
   <div class="note" style="margin-bottom:22px">Уже подавали заявку и получили номер с кодом доступа? Заходить можно с любого компьютера или телефона — просто <a href="#" onclick="showTab('cab');return false" style="color:var(--g);font-weight:600">войдите в кабинет →</a></div>
-  <label>ФИО индивидуального предпринимателя *</label>
-  <input id="fName" placeholder="Иванов Иван Иванович">
-  <label>ИИН *</label>
-  <input id="fIin" maxlength="12" inputmode="numeric" placeholder="12 цифр">
+  <!-- тип заёмщика: ИП (с 13.07.2026) и ТОО (с 05.09.2026, решение ГД) — один кабинет, чек-лист документов свой -->
+  <div class="tabs" style="margin-bottom:18px">
+    <div class="tab on" id="kindIP" onclick="setKind('ИП')">Индивидуальный предприниматель</div>
+    <div class="tab" id="kindTOO" onclick="setKind('ТОО')">ТОО (юридическое лицо)</div>
+  </div>
+  <div id="ipFields">
+    <label>ФИО индивидуального предпринимателя *</label>
+    <input id="fName" placeholder="Иванов Иван Иванович">
+    <label>ИИН *</label>
+    <input id="fIin" maxlength="12" inputmode="numeric" placeholder="12 цифр">
+  </div>
+  <div id="tooFields" style="display:none">
+    <label>Наименование ТОО *</label>
+    <input id="fCompany" placeholder="ТОО «Название»">
+    <label>БИН *</label>
+    <input id="fBin" maxlength="12" inputmode="numeric" placeholder="12 цифр">
+    <label>ФИО руководителя *</label>
+    <input id="fDirector" placeholder="Кто подписывает договор от имени ТОО">
+  </div>
   <label>Телефон *</label>
   <input id="fPhone" placeholder="+7 ___ ___ __ __">
   <label>Сумма, тенге *</label>
-  <input id="fAmount" inputmode="numeric" placeholder="от 5 000 000 до 10 000 000">
+  <input id="fAmount" inputmode="numeric" placeholder="от 5 000 000 до 20 000 000">
   <label>Срок, месяцев</label>
-  <select id="fTerm"><option>3</option><option selected>6</option><option>9</option><option>12</option></select>
-  <label>ФИО гаранта (физическое лицо)</label>
-  <input id="fGar" placeholder="Кто выступит гарантом по займу">
-  <label>Телефон гаранта</label>
-  <input id="fGarPhone" placeholder="+7 ___ ___ __ __">
+  <select id="fTerm"></select>
+  <div id="garFields">
+    <label>ФИО гаранта (физическое лицо)</label>
+    <input id="fGar" placeholder="Кто выступит гарантом по займу">
+    <label>Телефон гаранта</label>
+    <input id="fGarPhone" placeholder="+7 ___ ___ __ __">
+  </div>
   <div style="margin-top:22px;font-weight:600;font-size:14px">Согласия <span style="font-weight:400;color:var(--mut)">— отметьте все три</span></div>
   <label style="display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-size:13px;color:var(--text);font-weight:400">
     <input type="checkbox" id="cPd" style="width:18px;height:18px;margin-top:2px">
@@ -118,7 +135,7 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
 <!-- ══ КАБИНЕТ ══ -->
 <div class="card" id="paneLogin" style="display:none">
   <label>Номер заявки</label>
-  <input id="lApp" placeholder="IPX-XXXX-XXXX" style="text-transform:uppercase">
+  <input id="lApp" placeholder="IPX-XXXX-XXXX или TEX-XXXX-XXXX" style="text-transform:uppercase">
   <label>Код доступа</label>
   <input id="lAcc" placeholder="8 символов" style="text-transform:uppercase">
   <button class="btn" onclick="login()">Войти</button>
@@ -135,7 +152,7 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
   </div>
   <!-- точка завершения: клиент видит прогресс и сам отправляет заявку на рассмотрение -->
   <div class="card" id="finishCard"></div>
-  <div class="note">Договор и договор гарантии подписываются в офисе: Алматы, при себе — оригинал удостоверения (вашего и гаранта). Деньги перечисляются на текущий счёт ИП в день подписания.</div>
+  <div class="note" id="signNote">Договор и договор гарантии подписываются в офисе: Алматы, при себе — оригинал удостоверения (вашего и гаранта). Деньги перечисляются на текущий счёт ИП в день подписания.</div>
 </div>
 
 </div>
@@ -146,7 +163,32 @@ footer{border-top:1px solid var(--brd);padding:24px 40px;font-size:12.5px;color:
 <script>
 const FN = "https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/ipx-cabinet";
 const LS = "ipx_session";
-let sess = null, docs = {}, cl = {}, pendingKey = null;
+let sess = null, docs = {}, cl = {}, pendingKey = null, kind = "ИП";
+// вилки сумм и сроков — те же, что проверяет функция: ИП 5–20 млн до 24 мес, ТОО 5–80 млн до 36 мес
+const KINDS = {
+  "ИП":  {name:"ИП Экспресс",  min:5e6, max:20e6, terms:[3,6,9,12,18,24], def:6,
+          sub:"Микрокредит 5–20 млн ₸ для ИП, под гарантию физического лица. Заявка и документы — онлайн, договор подпишете в офисе за один визит.",
+          amount:"от 5 000 000 до 20 000 000",
+          sign:"Договор и договор гарантии подписываются в офисе: Алматы, при себе — оригинал удостоверения (вашего и гаранта). Деньги перечисляются на текущий счёт ИП в день подписания.",
+          who:"с вами и гарантом, с оригиналами удостоверений", acct:"текущий счёт ИП"},
+  "ТОО": {name:"ТОО Экспресс", min:5e6, max:80e6, terms:[3,6,9,12,18,24,36], def:12,
+          sub:"Микрокредит 5–80 млн ₸ для ТОО под залог недвижимости. Заявка и документы — онлайн, договор подпишете в офисе за один визит.",
+          amount:"от 5 000 000 до 80 000 000",
+          sign:"Договор микрокредита и договор залога подписываются в офисе: Алматы, руководитель с оригиналами удостоверения и документов на залог. Деньги перечисляются на расчётный счёт ТОО в день подписания.",
+          who:"руководитель с оригиналами удостоверения и документов на залог", acct:"расчётный счёт ТОО"},
+};
+function setKind(k){
+  kind = KINDS[k] ? k : "ИП"; const K = KINDS[kind];
+  $("kindIP").classList.toggle("on", kind==="ИП"); $("kindTOO").classList.toggle("on", kind==="ТОО");
+  $("ipFields").style.display = kind==="ИП" ? "" : "none";
+  $("tooFields").style.display = kind==="ТОО" ? "" : "none";
+  $("garFields").style.display = kind==="ИП" ? "" : "none";
+  $("fAmount").placeholder = K.amount;
+  $("fTerm").innerHTML = K.terms.map(t => `<option${t===K.def?" selected":""}>${t}</option>`).join("");
+  $("cabTitle").textContent = `${K.name} — онлайн-кабинет`; $("cabSub").textContent = K.sub;
+  $("signNote").textContent = K.sign;
+  STATUS_TEXT.approved[1] = `✅ Одобрено! Ждём вас в офисе для подписания договора. Деньги — на ${K.acct} в день подписания.`;
+}
 const SUBMIT_TXT = "Всё загрузил — отправить на рассмотрение";
 
 const $ = id => document.getElementById(id);
@@ -173,13 +215,18 @@ async function apply(){
   const consents = {pd: $("cPd").checked, bki: $("cBki").checked, auto: $("cAuto").checked};
   if (!consents.pd || !consents.bki || !consents.auto) return showErr(err, "Отметьте все три согласия — без них заявку принять нельзя");
   const amount = Number($("fAmount").value.replace(/\D/g,""));
+  const K = KINDS[kind];
   const body = {
-    action: "apply", name: $("fName").value, iin: $("fIin").value,
+    action: "apply", borrower_type: kind,
+    name: kind==="ТОО" ? $("fCompany").value : $("fName").value, iin: $("fIin").value,
+    bin: $("fBin").value.replace(/\D/g,""), director: $("fDirector").value,
     phone: $("fPhone").value, amount, term: Number($("fTerm").value),
     guarantor_name: $("fGar").value, guarantor_phone: $("fGarPhone").value, consents,
   };
-  if (!body.name.trim() || !body.phone.trim()) return showErr(err, "Заполните ФИО и телефон");
-  if (!(amount >= 5000000 && amount <= 20000000)) return showErr(err, "Сумма — от 5 до 20 млн тенге");
+  if (!body.name.trim() || !body.phone.trim()) return showErr(err, kind==="ТОО" ? "Заполните наименование ТОО и телефон" : "Заполните ФИО и телефон");
+  if (kind==="ТОО" && !/^\d{12}$/.test(body.bin)) return showErr(err, "БИН — 12 цифр");
+  if (kind==="ТОО" && !body.director.trim()) return showErr(err, "Укажите ФИО руководителя");
+  if (!(amount >= K.min && amount <= K.max)) return showErr(err, `Сумма — от ${K.min/1e6} до ${K.max/1e6} млн тенге`);
   const b = $("btnApply"); b.disabled = true; b.textContent = "Отправляем…";
   try {
     const r = await (await fetch(FN, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)})).json();
@@ -208,6 +255,7 @@ async function refresh(silent){
       body: JSON.stringify({action:"status", app_code: sess.app, access_code: sess.acc||"", magic: sess.magic||""})})).json();
     if (!r.ok) return false;
     docs = r.docs;
+    if (r.borrower_type && r.borrower_type !== kind) setKind(r.borrower_type);
     const [cls, txt] = STATUS_TEXT[r.status] || STATUS_TEXT.docs;
     $("stBox").className = "status " + cls;
     $("stBox").innerHTML = `<b>${sess.app}</b> · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес<br>${txt}` +
@@ -244,8 +292,8 @@ function renderFinish(status){
       <ol class="steps">
         <li>Проверяем документы и считаем условия — обычно 1–2 рабочих дня.</li>
         <li>Позвоним по указанному телефону, если что-то нужно уточнить.</li>
-        <li>При одобрении статус здесь изменится, и мы пригласим в офис (Алматы) на подписание — с вами и гарантом, с оригиналами удостоверений.</li>
-        <li>Деньги перечисляем на текущий счёт ИП в день подписания.</li>
+        <li>При одобрении статус здесь изменится, и мы пригласим в офис (Алматы) на подписание — ${KINDS[kind].who}.</li>
+        <li>Деньги перечисляем на ${KINDS[kind].acct} в день подписания.</li>
       </ol>
       <div class="note">Страницу можно закрыть — заходите по своей ссылке в кабинет, чтобы посмотреть статус. Нужно заменить или дослать файл — кнопка «+ ещё» у нужного пункта выше.</div>`;
     return;
@@ -324,5 +372,7 @@ if (qp.get("app") && qp.get("t")) {
   showTab("cab");
   if (qp.get("app")) $("lApp").value = qp.get("app").toUpperCase();
 }
+// ?type=too — со страницы «Для юр. лиц» сразу форма ТОО; иначе ИП
+setKind((qp.get("type") || "").toLowerCase() === "too" ? "ТОО" : "ИП");
 </script>
 </body></html>
