@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     <button class="nav-burger" id="navBurger" aria-label="Меню">☰</button>
     <div class="nav-links" id="navLinks">
       ${navLinks.map(l => `<a href="${l.href}"${l.href===currentPage?' class="active"':''}>${l.label}</a>`).join('')}
-      <a href="kontakty.html" class="nav-cta">Подать заявку</a>
     </div>
   </nav>`;
 
