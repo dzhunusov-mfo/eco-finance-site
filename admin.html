@@ -137,7 +137,11 @@ async function viewApp(appCode){
     const st = (r.checklist || {})[k];
     return `<div class="doc"><span class="st">${st?.uploaded ? "✓" : "—"}</span><span>${title}${st?.files ? ` · файлов: ${st.files}` : ""}</span></div>`;
   }).join("");
-  $("detFolder").innerHTML = `📁 <a href="https://drive.google.com/drive/folders/${r.drive_folder_id}" target="_blank" rel="noopener">Папка досье на Drive</a>`;
+  $("detFolder").innerHTML = `📁 <a href="https://drive.google.com/drive/folders/${r.drive_folder_id}" target="_blank" rel="noopener">Папка досье на Drive</a>` +
+    // замок на «одобрено» (решение ГД 05.09.2026): чего не хватает в папках «4. Заключения» и «5. Протоколы КК»
+    (r.gate_missing === null ? `<div style="color:#b45309;margin-top:8px">⚠️ Папки досье не прочитались — замок одобрения не проверен</div>`
+     : r.gate_missing.length ? `<div style="color:#b91c1c;margin-top:8px">⛔ Одобрение заблокировано, в досье нет: ${r.gate_missing.join("; ")}</div>`
+     : `<div style="color:var(--g);margin-top:8px">✅ Протокол КК и заключения на месте — одобрение доступно</div>`);
   $("decStatus").value = r.status;
   $("decComment").value = r.decision_comment || "";
 }
@@ -145,7 +149,12 @@ async function viewApp(appCode){
 async function saveDecision(){
   const err = $("errDec"); err.style.display = "none";
   const r = await call({action:"admin_decide", app_code: curApp, status: $("decStatus").value, comment: $("decComment").value});
-  if (!r.ok){ err.textContent = "Не сохранилось: " + (r.error || ""); err.style.display = "block"; return; }
+  if (!r.ok){
+    err.textContent = r.error === "gate" ? "Одобрение заблокировано — в досье нет: " + (r.missing || []).join("; ")
+      : r.error === "gate_unreadable" ? "Папки досье не прочитались — замок одобрения не проверен, попробуйте ещё раз"
+      : "Не сохранилось: " + (r.error || "");
+    err.style.display = "block"; return;
+  }
   viewApp(curApp);
 }
 
