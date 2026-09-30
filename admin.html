@@ -21,6 +21,7 @@ textarea{resize:vertical;min-height:70px}
 .badge{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap}
 .b-docs{background:var(--gl);color:var(--g)}
 .b-review{background:#fdf6e3;color:#8a6d1a}
+.b-scoring{background:#e8f0fb;color:#1d4f91}
 .b-approved{background:var(--g);color:#fff}
 .b-declined{background:#fbeaea;color:#a33}
 .mut{color:var(--mut);font-size:13px}
@@ -59,6 +60,8 @@ a{color:var(--g)}
     <label>Изменить статус</label>
     <select id="decStatus">
       <option value="docs">docs — сбор документов</option>
+      <option value="scoring">scoring — ИП: выписки загружены, ждут предварительного решения</option>
+      <option value="preapproved">preapproved — ИП: предварительно одобрено, клиенту открыты остальные документы</option>
       <option value="review">review — на рассмотрении</option>
       <option value="approved">approved — одобрено</option>
       <option value="declined">declined — отказ</option>
@@ -80,6 +83,8 @@ let curApp = null;
 const $ = id => document.getElementById(id);
 const STATUS_TEXT = {
   docs: ["b-docs", "📋 Заявка принята — ждём документы по чек-листу."],
+  scoring: ["b-scoring", "📊 Выписки загружены — нужно предварительное решение: по ИИН отчёт ПКБ, скор-балл, kyc.kz → папка «3. Скоринг и расчёты». Дальше «preapproved» или «declined»."],
+  preapproved: ["b-review", "✅ Предварительно одобрено — клиент загружает документы для оформления."],
   review: ["b-review", "⏳ Документы на рассмотрении."],
   approved: ["b-approved", "✅ Одобрено."],
   declined: ["b-declined", "❌ Отказ."],
@@ -109,7 +114,8 @@ async function loadList(){
   $("paneDetail").style.display = "none";
   $("paneList").style.display = "";
   $("listBox").innerHTML = r.rows.map(row => {
-    const done = Object.values(row.checklist || {}).filter(v => v.uploaded).length;
+    // считает функция по открытым клиенту слотам (у ИП на первом этапе — две выписки)
+    const done = row.docs_done ?? Object.values(row.checklist || {}).filter(v => v.uploaded).length;
     const [cls] = STATUS_TEXT[row.status] || ["b-docs"];
     return `<div class="row" onclick="viewApp('${row.app_code}')">
       <div>

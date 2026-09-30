@@ -188,12 +188,22 @@ function setKind(k){
   $("cabTitle").textContent = `${K.name} — онлайн-кабинет`; $("cabSub").textContent = K.sub;
   $("signNote").textContent = K.sign;
   STATUS_TEXT.approved[1] = `✅ Одобрено! Ждём вас в офисе для подписания договора. Деньги — на ${K.acct} в день подписания.`;
+  // ИП — два этапа (решение ГД 30.09.2026): сначала только выписки для предварительного решения
+  STATUS_TEXT.docs[1] = kind === "ИП" ? DOCS_TXT_IP : DOCS_TXT;
 }
 const SUBMIT_TXT = "Всё загрузил — отправить на рассмотрение";
+const SUBMIT_TXT_STAGE1 = "Отправить выписки на предварительное решение";
+// первый этап ИП — заявка в «docs»: кнопка отправляет выписки, а не весь комплект
+const submitTxt = status => (kind === "ИП" && status === "docs") ? SUBMIT_TXT_STAGE1 : SUBMIT_TXT;
+const DOCS_TXT = "📋 Заявка принята — загрузите документы по чек-листу. Когда все пункты будут с галочкой, нажмите внизу «Всё загрузил» — с этого начнётся рассмотрение.";
+const DOCS_TXT_IP = "📋 Заявка принята. Для предварительного решения нужны только две выписки за 12 месяцев — по расчётному счёту ИП и по личному счёту (Kaspi или Halyk). Остальные документы попросим после предварительного одобрения.";
+let curStatus = "docs";
 
 const $ = id => document.getElementById(id);
 const STATUS_TEXT = {
   docs: ["s-docs", "📋 Заявка принята — загрузите документы по чек-листу. Когда все пункты будут с галочкой, нажмите внизу «Всё загрузил» — с этого начнётся рассмотрение."],
+  scoring: ["s-review", "📊 Выписки получены — готовим предварительное решение: проверяем кредитную историю и обороты. Обычно 1 рабочий день, статус обновится здесь."],
+  preapproved: ["s-approved", "✅ Предварительно одобрено! Осталось загрузить документы для оформления — список ниже. Когда все пункты будут с галочкой, нажмите «Всё загрузил»."],
   review: ["s-review", "⏳ Документы на рассмотрении. Обычно решение занимает 1–2 рабочих дня — статус обновится здесь."],
   approved: ["s-approved", "✅ Одобрено! Ждём вас в офисе для подписания договора. Деньги — на счёт ИП в день подписания."],
   declined: ["s-declined", "К сожалению, по заявке принято отрицательное решение."],
@@ -260,8 +270,9 @@ async function refresh(silent){
     $("stBox").className = "status " + cls;
     $("stBox").innerHTML = `<b>${sess.app}</b> · ${Number(r.amount).toLocaleString("ru-RU")} ₸ · ${r.term_months} мес<br>${txt}` +
       (r.decision_comment ? `<br><span style="opacity:.85">${r.decision_comment}</span>` : "");
+    curStatus = r.status || "docs";
     renderDocs(r.checklist || {});
-    renderFinish(r.status || "docs");
+    renderFinish(curStatus);
     return true;
   } catch { return false; }
 }
@@ -298,6 +309,18 @@ function renderFinish(status){
       <div class="note">Страницу можно закрыть — заходите по своей ссылке в кабинет, чтобы посмотреть статус. Нужно заменить или дослать файл — кнопка «+ ещё» у нужного пункта выше.</div>`;
     return;
   }
+  if (status === "scoring"){
+    box.style.display = "";
+    box.innerHTML =`<div class="fin-t" style="color:var(--g);font-size:17px">✅ Выписки отправлены — готовим предварительное решение</div>
+      <div class="fin-t" style="margin-top:16px">Что дальше</div>
+      <ol class="steps">
+        <li>По вашему ИИН и согласиям проверяем кредитную историю, смотрим обороты по выпискам — обычно 1 рабочий день.</li>
+        <li>При предварительном одобрении здесь откроется список документов для оформления, и мы позвоним.</li>
+        <li>Документы загружаете сюда же, затем — подписание в офисе.</li>
+      </ol>
+      <div class="note">Страницу можно закрыть и зайти позже по своей ссылке. Нужно заменить выписку — кнопка «+ ещё» у нужного пункта выше.</div>`;
+    return;
+  }
   if (status === "approved" || status === "declined"){ box.innerHTML = ""; box.style.display = "none"; return; }
   box.style.display = "";
 
@@ -306,10 +329,10 @@ function renderFinish(status){
     <div class="fin-t">Загружено ${done.length} из ${keys.length} документов</div>` +
     (miss.length
       ? `<div class="hint">Осталось загрузить: ${miss.map(k => docs[k]).join(", ")}.</div>
-         <button class="btn" disabled>${SUBMIT_TXT}</button>
+         <button class="btn" disabled>${submitTxt(status)}</button>
          <div class="hint" style="text-align:center">Кнопка включится, когда все пункты будут с галочкой</div>`
       : `<div style="font-size:14px;color:var(--g)">Все документы на месте. Нажмите кнопку — и мы начнём рассмотрение.</div>
-         <button class="btn" onclick="submitApp()">✓ ${SUBMIT_TXT}</button>`) +
+         <button class="btn" onclick="submitApp()">✓ ${submitTxt(status)}</button>`) +
     `<div class="err" id="errFin"></div>`;
 }
 
@@ -324,7 +347,7 @@ async function submitApp(){
     $("stBox").scrollIntoView({behavior:"smooth", block:"center"});
   } catch(e){
     showErr($("errFin"), "Не отправилось: " + e.message + ". Попробуйте ещё раз или позвоните нам.");
-    btn.disabled = false; btn.textContent = "✓ " + SUBMIT_TXT;
+    btn.disabled = false; btn.textContent = "✓ " + submitTxt(curStatus);
   }
 }
 
@@ -345,8 +368,9 @@ $("fileInput").addEventListener("change", async () => {
   try {
     const r = await (await fetch(FN, {method:"POST", body: fd})).json();
     if (!r.ok) throw new Error(r.error || "ошибка");
+    curStatus = r.status || curStatus;
     renderDocs(r.checklist);
-    renderFinish(r.status || "docs");
+    renderFinish(curStatus);
     if (r.review && r.review.accepted === false) showErr(err, "⚠️ " + r.review.reason);
     // комплект собрался — подводим клиента к кнопке «Завершить», а не оставляем гадать
     else if (r.complete) $("finishCard").scrollIntoView({behavior:"smooth", block:"center"});
