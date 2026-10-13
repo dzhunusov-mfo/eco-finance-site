@@ -367,10 +367,39 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding:50px 40px 30px
   <div id="complaint" style="margin-top:40px">
     <div class="ccard">
       <h3>Сообщить о проблеме</h3>
-      <p style="font-size:14px;color:var(--mut);line-height:1.7;margin-bottom:16px">Если у вас возникли претензии к работе ЭКО-Финанс или действиям сотрудников — вы можете направить жалобу. Рассматриваем обращения в течение 15 рабочих дней согласно Постановлению АРРФР №51.</p>
-      <div style="display:flex;gap:14px;flex-wrap:wrap">
-        <a href="mailto:info@eco-finance.kz?subject=Жалоба" class="btn bp" style="font-size:14px">Написать жалобу на email</a>
-        <a href="https://wa.me/+77021002757" target="_blank" rel="noopener" class="btn bs" style="font-size:14px">Написать в WhatsApp</a>
+      <p style="font-size:14px;color:var(--mut);line-height:1.7;margin-bottom:12px">Если у вас есть претензия к работе ЭКО-Финанс или действиям наших сотрудников, направьте обращение любым удобным способом: через форму ниже, на <a href="mailto:info@eco-finance.kz?subject=Обращение" style="color:var(--g)">info@eco-finance.kz</a>, по телефону или в WhatsApp <a href="tel:+77021002757" style="color:var(--g)">+7 702 100 27 57</a>, почтой или лично в офисе: г. Алматы, ул. Бекмаханова, 95А (пн–пт 9:00–18:00).</p>
+      <p style="font-size:14px;color:var(--mut);line-height:1.7;margin-bottom:18px">Обращение регистрируется в день поступления. Ответ направляем не позднее 15 рабочих дней; если потребуется дополнительная проверка, срок может быть продлён ещё не более чем на 15 рабочих дней — мы сообщим об этом. Порядок установлен главой 8 Требований к осуществлению микрофинансовой деятельности (постановление Правления АРРФР № 92 от 15.05.2026).</p>
+      <div id="cform-wrap" style="max-width:620px">
+        <div class="form-group">
+          <label>ФИО или наименование организации *</label>
+          <input type="text" id="cname" placeholder="Азамат Омаров / ТОО «…»">
+        </div>
+        <div class="form-group">
+          <label>Номер телефона *</label>
+          <input type="tel" id="cphone" placeholder="+7 700 000 00 00">
+        </div>
+        <div class="form-group">
+          <label>Email для ответа</label>
+          <input type="email" id="cemail" placeholder="name@mail.kz">
+        </div>
+        <div class="form-group">
+          <label>Номер договора (если есть)</label>
+          <input type="text" id="ccontract" placeholder="№ … от …">
+        </div>
+        <div class="form-group">
+          <label>Суть обращения *</label>
+          <textarea id="ctext" placeholder="Опишите ситуацию и чего вы просите"></textarea>
+        </div>
+        <button class="btn bp" style="width:100%;justify-content:center" onclick="submitComplaint()">Отправить обращение →</button>
+        <div class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных согласно <a href="policy.html" style="color:var(--g)">политике конфиденциальности</a>.</div>
+        <div class="success-msg" id="cSuccess"></div>
+      </div>
+      <div style="margin-top:24px;padding:18px 20px;background:#f6f8f7;border:1px solid var(--brd);border-radius:var(--r);font-size:14px;line-height:1.7;color:var(--text)">
+        <b>Если вы не согласны с нашим ответом</b>, вы вправе бесплатно обратиться к микрофинансовому омбудсману, а также в Агентство Республики Казахстан по регулированию и развитию финансового рынка или в суд.<br><br>
+        <b>Микрофинансовый омбудсман</b> — ЧУ «Офис микрофинансового омбудсмана»<br>
+        г. Алматы, ул. Мынбаева, 53, 3 этаж, офис 321 · пн–пт 9:00–18:00<br>
+        Телефон: <a href="tel:+77752228008" style="color:var(--g)">8 775 222 80 08</a> · Email: <a href="mailto:info@mfombudsman.kz" style="color:var(--g)">info@mfombudsman.kz</a><br>
+        Сайт и форма обращения: <a href="https://mfombudsman.kz/#form" target="_blank" rel="noopener" style="color:var(--g)">mfombudsman.kz</a>
       </div>
     </div>
   </div>
@@ -391,6 +420,39 @@ function typeChanged(){
   var isUl=v==='Кредит для юр. лица (ТОО)';
   document.getElementById('ulHint').style.display=isUl?'block':'none';
   document.getElementById('binGroup').style.display=isUl?'block':'none';
+}
+async function submitComplaint(){
+  var name=document.getElementById('cname').value.trim();
+  var phone=document.getElementById('cphone').value.trim();
+  var email=document.getElementById('cemail').value.trim();
+  var contract=document.getElementById('ccontract').value.trim();
+  var text=document.getElementById('ctext').value.trim();
+  if(!name){alert('Укажите ФИО или наименование организации');return;}
+  if(!phone){alert('Укажите номер телефона');return;}
+  if(!text){alert('Опишите суть обращения');return;}
+  var btn=document.querySelector('#cform-wrap button');
+  var msg=document.getElementById('cSuccess');
+  btn.disabled=true; btn.textContent='Отправка...';
+  var ok=false, reg='';
+  try{
+    var r=await fetch('https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/site-lead',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({kind:'complaint',type:'Обращение (жалоба)',name:name,phone:phone,email:email,contract:contract,
+        comment:'Email: '+(email||'—')+'; договор: '+(contract||'—')+'. '+text})
+    });
+    ok=r.ok;
+    try{var j=await r.json(); reg=j.reg||'';}catch(e){}
+  }catch(e){}
+  msg.style.display='block';
+  if(ok){
+    msg.style.color=''; btn.textContent='Отправлено ✓';
+    msg.textContent='✅ Обращение принято'+(reg?' — регистрационный № '+reg:'')+'. Ответ направим не позднее 15 рабочих дней.';
+  }else{
+    btn.disabled=false; btn.textContent='Отправить обращение →';
+    msg.style.color='#b00020';
+    msg.textContent='⚠️ Не удалось отправить обращение. Напишите на info@eco-finance.kz или позвоните: +7 702 100 27 57.';
+  }
 }
 async function submitForm(){
   var phone=document.getElementById('fphone').value.trim();
