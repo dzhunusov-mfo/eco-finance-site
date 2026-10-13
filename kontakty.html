@@ -433,21 +433,21 @@ async function submitComplaint(){
   var btn=document.querySelector('#cform-wrap button');
   var msg=document.getElementById('cSuccess');
   btn.disabled=true; btn.textContent='Отправка...';
-  var ok=false, reg='';
+  var ok=false, reg='', rdate='';
   try{
     var r=await fetch('https://usoobhhqfrrhfbkpziqf.supabase.co/functions/v1/site-lead',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({kind:'complaint',type:'Обращение (жалоба)',name:name,phone:phone,email:email,contract:contract,
+      body:JSON.stringify({kind:'complaint',type:'Обращение (жалоба)',name:name,phone:phone,email:email,contract:contract,text:text,
         comment:'Email: '+(email||'—')+'; договор: '+(contract||'—')+'. '+text})
     });
     ok=r.ok;
-    try{var j=await r.json(); reg=j.reg||'';}catch(e){}
+    try{var j=await r.json(); reg=j.reg||''; rdate=j.date||'';}catch(e){}
   }catch(e){}
   msg.style.display='block';
   if(ok){
     msg.style.color=''; btn.textContent='Отправлено ✓';
-    msg.textContent='✅ Обращение принято'+(reg?' — регистрационный № '+reg:'')+'. Ответ направим не позднее 15 рабочих дней.';
+    msg.textContent='✅ Обращение принято'+(reg?' и зарегистрировано: вх. № '+reg+(rdate?' от '+rdate:''):'')+'. Ответ направим не позднее 15 рабочих дней.';
   }else{
     btn.disabled=false; btn.textContent='Отправить обращение →';
     msg.style.color='#b00020';
