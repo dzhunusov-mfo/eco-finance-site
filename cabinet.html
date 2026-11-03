@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Онлайн-кабинет «Экспресс» — ИП и ТОО | ЭКО-Финанс</title>
 <link rel="icon" type="image/png" href="favicon.png">
+<meta name="robots" content="noindex">
 <meta name="description" content="Онлайн-заявка на микрокредит для ИП и ТОО: анкета, загрузка документов по чек-листу и статус рассмотрения в одном кабинете. Договор подпишете в офисе за один визит.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -398,5 +399,10 @@ if (qp.get("app") && qp.get("t")) {
 }
 // ?type=too — со страницы «Для юр. лиц» сразу форма ТОО; иначе ИП
 setKind((qp.get("type") || "").toLowerCase() === "too" ? "ТОО" : "ИП");
+// вариант 2 сайта (04.11.2026): новые заявки онлайн не принимаются — кабинет только для уже подавших
+$("tabNew").style.display = "none";
+$("cabTitle").textContent = "Личный кабинет заёмщика";
+$("cabSub").innerHTML = 'Вход для клиентов, которые уже подали заявку. Новые заявки онлайн не принимаются — позвоните нам: <a href="tel:+77021002757" style="color:var(--g)">+7 702 100 27 57</a>.';
+showTab("cab");
 </script>
 </body></html>
