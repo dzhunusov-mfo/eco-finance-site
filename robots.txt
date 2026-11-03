@@ -1,5 +1,5 @@
 # eco-finance.kz — ТОО «МФО ЭКО-Финанс»
-# cabinet.html и admin.html закрыты через meta noindex (robots-блокировка сняла бы noindex)
+# cabinet.html — заглушка «кабинет закрыт» (04.11.2026), закрыта через meta noindex
 User-agent: *
 Allow: /
 
